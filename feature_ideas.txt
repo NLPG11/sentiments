@@ -1,4 +1,4 @@
-~Character based features~
+~Character based features~[tristan]
 F1 total number of characters in words(C)
 F2 total number of letters(a-z)/C
 F3 total number of upper characters/C
@@ -7,7 +7,7 @@ F5 total number of white-space characters/C
 F6 total number of tab space characters/C
 F7 : : : F29 number of special characters(%,etc.)/C(23 features)
 
-~Syntactic features~
+~Syntactic features~[tristan]
 F131 number of single quotes(’) /C
 F132 number of commas(,)/C
 F133 number of periods(.)/C
@@ -54,7 +54,7 @@ F152 absence/present of greeting words
 F153 absence/present of farewell words
 
 
-~Function words~
+~Function words~[huda]
 F154 : : : F156 number of article words/N (3 features)
 F157 : : : F160 number of pro-sentence words/N (4 features)
 F161 : : : F234 number of pronoun words/N (74 features)
