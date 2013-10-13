@@ -44,7 +44,6 @@ product3.txt 1 1
 product3.txt 2 1
 product3.txt 3 0
 
- 
 
 Sample test files and a sample output file: zip file.
  
@@ -67,10 +66,13 @@ Below, each item that must be turned in is preceded with a lowercase roman numer
 
 Each person must individually develop at least one feature to be used by the group.
 
-It is up to your group to determine who does what, but each individual must develop at least one distinct feature. Your group must also agree in advance how each individual should output the features so that they can be combined into the classifier. (i) Each individual's code should be in the form of functions that produce output in this agreed-upon format and (ii) to get full credit the code must state what this format is in their documentation.
-(iii) You must show for each feature that you tried to optimize it; for example, if you used unigrams, you tested for the effects of using stopwords and/or stemming, or for example for bigrams you tested for informative collocations (e.g., using mutual information or chi-square or likelihood ratio, etc) or part of speech patterns a la Turney.
+It is up to your group to determine who does what, but each individual must develop at least one distinct feature. Your group must also agree in advance how each individual should output the features so that they can be combined into the classifier. 
+    (i) Each individual's code should be in the form of functions that produce output in this agreed-upon format and
+    (ii) to get full credit the code must state what this format is in their documentation.
+    (iii) You must show for each feature that you tried to optimize it; for example, if you used unigrams, you tested for the effects of using stopwords and/or stemming, or for example for bigrams you tested for informative collocations (e.g., using mutual information or chi-square or likelihood ratio, etc) or part of speech patterns a la Turney.
 
-Each individual feature must be tried out on the classification task to see how well it performs on the training data and on the held-out data. (iv) These results must be reported and included in the writeup. It is expected that each person individually is able to write code to run and test the classifier in this manner on the features they produce.
+Each individual feature must be tried out on the classification task to see how well it performs on the training data and on the held-out data.
+    (iv) These results must be reported and included in the writeup. It is expected that each person individually is able to write code to run and test the classifier in this manner on the features they produce.
 
 Here are some distinct types of features to try:
 
