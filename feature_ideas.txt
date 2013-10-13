@@ -7,7 +7,7 @@ F5 total number of white-space characters/C
 F6 total number of tab space characters/C
 F7 : : : F29 number of special characters(%,etc.)/C(23 features)
 
-~Syntactic features~[Ngoc]
+~Syntactic features~
 F131 number of single quotes(’) /C
 F132 number of commas(,)/C
 F133 number of periods(.)/C
@@ -38,7 +38,7 @@ F43 : : : F62 word length frequency distribution/N (20 features)
 F63 : : : F130 LIWC features (68 features)
 
 
-~Structural features~
+~Structural features~[Ngoc]
 F141 total number of lines
 F142 total number of sentences (S)
 F143 total number of paragraphs
