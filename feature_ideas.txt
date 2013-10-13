@@ -7,7 +7,7 @@ F5 total number of white-space characters/C
 F6 total number of tab space characters/C
 F7 : : : F29 number of special characters(%,etc.)/C(23 features)
 
-~Syntactic features~
+~Syntactic features~[Ngoc]
 F131 number of single quotes(’) /C
 F132 number of commas(,)/C
 F133 number of periods(.)/C
