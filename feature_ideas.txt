@@ -1,0 +1,65 @@
+~Character based features~
+F1 total number of characters in words(C)
+F2 total number of letters(a-z)/C
+F3 total number of upper characters/C
+F4 total number of digital characters/C
+F5 total number of white-space characters/C
+F6 total number of tab space characters/C
+F7 : : : F29 number of special characters(%,etc.)/C(23 features)
+
+~Syntactic features~
+F131 number of single quotes(’) /C
+F132 number of commas(,)/C
+F133 number of periods(.)/C
+F134 number of colons(:)/C
+F135 number of semi-colons(;)/C
+F136 number of question marks(?)/C
+F137 number of multiple question marks(???)/C
+F138 number of exclamation marks(!)/C
+F139 number of multiple exclamation marks(!!!!)/C
+F140 number of ellipsis(. . . ) /C
+
+
+~Word based features~ [Spencer]
+F30 total number of words (N)
+F31 Average length per word (in characters)
+F32 Vocabulary richness (total different words/N)
+F33 Words longer than 6 characters/N
+F34 Total number of short words (1-3 characters)/N
+F35 Hapax legomena/N
+F36 Hapax dislegomena/N
+F37 Yule’s K measure
+F38 Simpson’s D measure
+F39 Sichel’s S measure
+F40 Honore’s R measure
+F41 Entropy measure
+F42 The number of net abbreviation /N
+F43 : : : F62 word length frequency distribution/N (20 features)
+F63 : : : F130 LIWC features (68 features)
+
+
+~Structural features~
+F141 total number of lines
+F142 total number of sentences (S)
+F143 total number of paragraphs
+F144 average number of sentences per paragraph
+F145 average number of words per paragraph
+F146 average number of characters per paragraph
+F147 average number of words per sentence
+F148 number of sentences beginning with upper case/S
+F149 number of sentences beginning with lower case/S
+F150 number of blank lines/total number of lines
+F151 average length of non-blank line
+F152 absence/present of greeting words
+F153 absence/present of farewell words
+
+
+~Function words~
+F154 : : : F156 number of article words/N (3 features)
+F157 : : : F160 number of pro-sentence words/N (4 features)
+F161 : : : F234 number of pronoun words/N (74 features)
+F235 : : : F281 number of auxiliary-verbs/N (47 features)
+F282 : : : F303 number of conjunction words/N (22 features)
+F304 : : : F412 number of interjection words/N (109 features)
+F413 : : : F536 number of adposition words/N (124 features)
+F537 : : : F545 number of gender-speciﬁc words/N (9 features)
