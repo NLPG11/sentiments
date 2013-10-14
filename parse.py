@@ -18,7 +18,8 @@ def add_data(training, temp_feat):
         print "Value Error"
         re.match('\[(.*)\]', one)
         print re.search('\[(.*)\]', one).groups()
-        sys.exit()
+        #sys.exit()
+        return
     except AttributeError as aE:
         print "Attribute Error"
         print one
