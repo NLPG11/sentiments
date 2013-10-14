@@ -37,6 +37,8 @@ def read_txt_data(path, training_data):
     temp_features = []
     new_sent_val = False
     for line in text_file:
+        if "[t]" in line:
+            continue
         #print line
         if (len(re.findall(r"\[[\+|\-][0-9]\]+", line)) >= 1) and not new_sent_val: #new one
             temp_features.append(line)
