@@ -1,5 +1,6 @@
-import nltk, numpy, matplotlib
+# -*- coding: utf-8 -*-
 from __future__ import division
+import nltk, string
 
 
 ''' Takes a string as an input. Tokenizes string into list.
@@ -96,20 +97,17 @@ from __future__ import division
 
     '''
 
-def sFeature(sentence)
-
-
+def sFeature(sent):
+    sent = nltk.word_tokenize(sent)
+    for w in sent:
+        w = w.lower().rstrip(string.punctuation).lstrip(string.punctuation)
+    
     features = {}
-    def basicFt(s)
+
+    def basicFt(s):
         wc = len(s)
         features["wc"] = wc       
 
-        for w in s:
-            avglen += len(w)
-        avglen = avglen/wc
-        features["avglen"] = avglen
-    
-        Vocabulary richness (total different words/N) (rich)
         rich = len(set(s))/wc
         features["rich"] = rich
 
@@ -144,5 +142,7 @@ def sFeature(sentence)
         
 ##    def spokenCat(s)
     
-    
+    basicFt(sent)
     return features 
+
+print(sFeature("Ol dirty bastard gonna fuck your ass up"))
