@@ -9,6 +9,7 @@ training_data = {}
 parse.read_txt_data(test_path, training_data)
 
 print len(training_data)
+#print training_data
 
 #You should be able to continuourly call the function with different path, 
 #but with the same dictioary to build a comprehensive training dict.
