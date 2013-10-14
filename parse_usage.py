@@ -1,16 +1,30 @@
 import parse
+import os
+
 
 print "Starting usage sample"
 
-test_path = "data/training/ipod.txt"
+##################################TRAIN DATA ACUISITION########
+train_base_path = "data/training/"
+train_files = ["Canon PowerShot SD500.txt", "Canon S100.txt", "Diaper Champ.txt",
+               "Hitachi router.txt", "ipod.txt", "Linksys Router.txt", "MicroMP3.txt",
+              "Nokia 6600.txt", "norton.txt"]
+
 training_data = {}
 
-#Read the text and create data dict
-parse.read_txt_data(test_path, training_data)
+for train_file in train_files:
+    train_path = os.path.join(train_base_path, train_file)
+    parse.read_txt_data(train_path, training_data)
+
+##################################HELD DATA ACUISITION########
+held_base_path = "data/heldout/"
+held_files = ["Apex AD2600 Progressive-scan DVD player.txt", "Canon G3.txt", "Creative Labs Nomad Jukebox Zen Xtra 40GB.txt",
+               "Nikon coolpix 4300.txt", "Nokia 6610.txt"]
+held_data = {}
+
+for held_file in held_files:
+    held_path = os.path.join(held_base_path, held_file)
+    parse.read_txt_data(held_path, held_data)
 
 print len(training_data)
-#print training_data
-
-#You should be able to continuourly call the function with different path, 
-#but with the same dictioary to build a comprehensive training dict.
-
+print len(held_data)
