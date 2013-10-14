@@ -4,7 +4,7 @@ We will use dict as our feature formats. In order to avoid key name collision, w
 Training data format is also a dictionary. It will consist of the sentence, plus the positive / negative sentiments associated with the dictionary. i.e. #<"I hate ipods":-2, "Music quality is great":2> etc. Moreoever, it is up to the individual to convert the vallues to polarity (though a helper function is available in parser.py.
 
 
-Tristan:
+**Tristan**:
 I developed the parser that reads in the files and creates the data format. parser.usage_contains.py contains the sample code that utilizes parse.py. I've also included a few helper functions that may be helpful in parser.py
 
 Before I started testing, I tried to determine whether testing with raw sentiment values (-3, -2 -1, 0, 2,.. etc) was better than polarity (-1, 0, 1). Unsurprisingly, testing with polarity offered better results. All testing below were done based on polarity prediction (as specified by the competition spec)
@@ -35,8 +35,8 @@ I applied the same technique in optimizing the features. I started out with roug
 
 
 
-Spencer:
+**Spencer**:
 
-Ngoc:
+**Ngoc**:
 
-Huda:
+**Huda**:
