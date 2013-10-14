@@ -33,6 +33,21 @@ def add_data(training, temp_feat):
             target = target.replace(remove.group(1), "").strip() #remove the head
         training[target] = val
 
+def val_to_polarity(training_data):
+    '''Given a training data, changes all vals (such as -2, -1, 0, 1, 4) 
+    into polarity (-1, 0, 1). 
+    '''
+    new_data = {}
+    for k, v in training_data.items():
+        if v == 0:
+            new_data[k] = 0
+        elif v > 0:
+            new_data[k] = 1
+        else:
+            new_data[k] = -1
+    return new_data
+
+
 def read_txt_data(path, training_data):
     text_file = open(path, "r")
     temp_features = []
