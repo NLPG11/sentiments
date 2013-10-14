@@ -19,7 +19,7 @@ While testing my features, I first tried the following features as char_based_fe
     F6 total number of tab space characters/C
     F7 : : : F29 number of special characters(%,etc.)/C(23 features)
     
-In order to optimize for the features, I tried the classification by holding a feature out, to asses weather the percentage improved. The original classfication achieved roughly 52% accuracy. After some tweaking, I achieved 54% accuracy
+In order to optimize for the features, I tried the classification by holding a feature out, to asses weather the percentage improved. The original classfication achieved roughly 52% accuracy. An important discovery was that instead of actually using the actual number, checking for presence (via length > 0) offered a better result for some of the features. After some tweaking (via existence and not actual value, plus pulling out certain features), I achieved 56% accuracy.
 
 In addition to the above feature, I also tried the following features as syntactic_features:
 
@@ -31,9 +31,9 @@ In addition to the above feature, I also tried the following features as syntact
     F138 number of exclamation marks(!)/C
     F140 number of ellipsis(. . . ) /C
     
-I applied the same technique in optimizing the features. I started out with roughly 54% accuracy. After some tweaking, I was able to increase the accuracy to 59% (namel leaving out semi-colons, exclamation marks, and Ellipses.
+I applied the same technique in optimizing the features. I started out with roughly 54% accuracy. After some similar tweaking as before(via existence and not actual value, plus pulling out certain features),  I was able to increase the accuracy to 59% (namel leaving out semi-colons, exclamation marks, and Ellipses.
 
-
+In BOTH cases, the heldout data produced very similar results as the cross-validated data.
 
 **Spencer**:
 
