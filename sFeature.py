@@ -99,9 +99,8 @@ import nltk, string
 
 def sFeature(sent):
     sent = nltk.word_tokenize(sent)
-    for w in sent:
-        w = w.lower().rstrip(string.punctuation).lstrip(string.punctuation)
-    
+    sent = [w.lower().rstrip(string.punctuation).lstrip(string.punctuation)  for w in sent]
+            
     features = {}
 
     def basicFt(s):
@@ -134,7 +133,57 @@ def sFeature(sent):
 ##    def honoreR(s)
 ##        features["honoreR"] = hR
     
-##    def lingProc(s)
+    def lingProc(s):
+       #is dictionary word
+
+        funct = 0
+        prounoun = 0
+        ppron = 0
+        i = 0
+        we = 0
+        you = 0
+        shehe = 0
+        they = 0
+        ipron = 0
+
+        article = 0
+        verb = 0
+        auxverb = 0
+        present = 0
+        future = 0
+        adverb = 0
+        prep = 0
+        conj = 0
+        negate = 0
+        quant = 0
+        number = 0
+        swear = 0
+
+        for w in s:
+            if w == "i":
+                i += 1
+            if w == "we" or w == "us" or w == "our":
+                we += 1
+            if w == "you" or w == "your" or w == "thou":
+                you += 1
+            if w == "she" or w == "he" or w == "him" or w == "her":
+                you += 1
+            if w == "they" or w == "their" or w == "they'd" or w == "them":
+                they += 1
+            if w == "it" or w == "it's" or w == "those":
+                ipron += 1
+            if w == "a" or "an" or w == "the":
+                article += 1
+        ppron = i + we + you + shehe + they
+        pronoun = ppron + ipron
+        features["pronoun"] = pronoun
+        features["ppron"] = ppron
+        features["ipron"] = ipron
+        features["i"] = i
+        features["we"] = we
+        features["you"] =  you
+        features["shehe"] = shehe 
+        features["they"] = they
         
 ##    def psychProc(s)
         
@@ -142,7 +191,9 @@ def sFeature(sent):
         
 ##    def spokenCat(s)
     
+    print(sent)
     basicFt(sent)
+    lingProc(sent)
     return features 
 
-print(sFeature("Ol dirty bastard gonna fuck your ass up"))
+#print(sFeature("Ol dirty bastard gonna fuck your ass up"))
