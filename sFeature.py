@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
-import nltk, string
+import nltk, string, math
 
-
+''' Turney's Feature's list for the Gender Indentification paper gave us a basis
+    for which features to look for. The group split up the features list. I took
+    word features.
+'''
 ''' Takes a string as an input. Tokenizes string into list.
     returns a dictionary with the following word features:
         -total number of words (n)
@@ -23,76 +26,15 @@ import nltk, string
         
         (Avoided for now due to degree of tedium)
         -The number of net abbreviation /N (abbr)
-
-        -LIWC features:
-            Linguistic Processes:
-            -dictionary words (dic)
-            -Total function words (funct)
-                -Total pronouns (pronoun)
-                    -Personal pronouns (ppron)
-                        -1st pers singular (i)
-                        -1st pers plural (we)
-                        -2nd person (you)
-                        -3rd pers singular (shehe)
-                        -3rd pers plural (they)
-                    -Impersonal pronouns (ipron)
-                -Articles (article)
-                -Common verbs (verb)
-                -Past tense (auxverb)
-                -Present tense (present)
-                -Future tense (future)
-                -Adverbs (adverb)
-                -Prepositions (prep)
-                -Conjunctions (conj)
-                -Negations (negate)
-                -Quantifiers (quant)
-                -Numbers (number)
-                -Swear words (swear)
-            Psychological Proccesses:
-            -Social processes (social)
-                -Family (family)
-                -Friends (friend)
-                -Humans (human)
-            -Affective processes (affect)
-                -Positive emotion (posemo)
-                -Negative emotion (negemo)
-                -Anxiety (anx)
-                -Anger (anger)
-                -Sadness (sad)
-            -Cognitive processes (cogmech)
-                -Insight (insight)
-                -Causation (cause)
-                -Discrepancy (discrep)
-                -Tentative (tentat)
-                -Certainty (certain)
-                -Inhibition (always, never)
-                -Inclusive (incl)
-                -Exclusive (excl)
-            -Perceptual processes (percept)
-                -See (see)
-                -Hear (hear)
-                -Feel (feel)
-            -Biological processes (bio)
-                -Body (body)
-                -Health (health)
-                -Sexual (sexual)
-                -Ingestion (ingest)
-            -Relativity (relativ)
-                -Motion (motion)
-                -Space (space)
-                -Time (time)
-            Personal Concerns:
-            -Work (work)
-            -Achievement (achieve)
-            -Leisure (leisure)
-            -Home (home)
-            -Money (money)
-            -Religion (relig)
-            -Death (death)
-            Spoken categories:
-            -Assent (assent)
-            -Nonfluencies (nonflu)
-            -Fillers (filler)
+        
+        (LIWC was abandonned because of lack of access)
+        -Wordstat features:
+            -Negative (negemo)
+            -Positive (posemo)
+            -Uncertainty (uncertain)
+            -Litigiousness (litig)
+            -Weak Modal Words (weakModal)
+            -Strong Modal Words (strongModal)
 
 
     '''
@@ -124,76 +66,49 @@ def sFeature(sent):
         avglen = avglen/wc
         features["avglen"] = avglen
         
-##    def yuleK(s)
-##        features["yuleK"] = yK
-##    def sichelS(s)
-##        features["sichelS"] = sS
-##    def simpsonD(s)
-##        features["simpsonD"] = sD
-##    def honoreR(s)
-##        features["honoreR"] = hR
+#    def yuleK(s)
+#        features["yuleK"] = yK
+    def sichelS(s):
+        n = len(s)
+        v2 = 0
+        s2 = sorted(s)
+        for i in range (0, n-1):
+            if i == 0:
+                if s2[i] == s2[i+1] and s2[i] != s2[i+2]:
+                    v2 += 1
+            elif s2[i] == s2[i+1] and s2[i] != s2[i-1] and s2[i] != s2[i+2]:
+                    v2 += 1
+        S = v2/n
+        features["sichelS"] = S
+            
+#    def simpsonD(s)
+#        features["simpsonD"] = sD
+    def honoreR(s):
+        n = len(s)
+        v1 = n 
+        s2 = sorted(s)
+        for i in range(0, n-1):
+            if i == 0:
+                if s2[i] == s2[i+1]:
+                    v1 -= 2
+            else:
+                if s2[i] == s2[i+1] and s2[i] != s2[i-1]:
+                    v1 -= 2 
+                elif s2[i] == s2[i+1]:
+                    v1 -= 1
+        R = 0
+        try:
+            R = 100 * (math.log(n)/ (1 - v1/n))
+        except ZeroDivisionError:
+            print "divide by zero"
+        features["honoreR"] = R 
     
-    def lingProc(s):
-       #is dictionary word
-
-        funct = 0
-        prounoun = 0
-        ppron = 0
-        i = 0
-        we = 0
-        you = 0
-        shehe = 0
-        they = 0
-        ipron = 0
-
-        article = 0
-        verb = 0
-        auxverb = 0
-        present = 0
-        future = 0
-        adverb = 0
-        prep = 0
-        conj = 0
-        negate = 0
-        quant = 0
-        number = 0
-        swear = 0
-
-        for w in s:
-            if w == "i":
-                i += 1
-            if w == "we" or w == "us" or w == "our":
-                we += 1
-            if w == "you" or w == "your" or w == "thou":
-                you += 1
-            if w == "she" or w == "he" or w == "him" or w == "her":
-                you += 1
-            if w == "they" or w == "their" or w == "they'd" or w == "them":
-                they += 1
-            if w == "it" or w == "it's" or w == "those":
-                ipron += 1
-            if w == "a" or "an" or w == "the":
-                article += 1
-        ppron = i + we + you + shehe + they
-        pronoun = ppron + ipron
-        features["pronoun"] = pronoun
-        features["ppron"] = ppron
-        features["ipron"] = ipron
-        features["i"] = i
-        features["we"] = we
-        features["you"] =  you
-        features["shehe"] = shehe 
-        features["they"] = they
-        
-##    def psychProc(s)
-        
-##    def persConc(s)
-        
-##    def spokenCat(s)
+#    def wordStat(s):
     
     print(sent)
     basicFt(sent)
-    lingProc(sent)
+    honoreR(sent)
+    sichelS(sent)
     return features 
 
-#print(sFeature("Ol dirty bastard gonna fuck your ass up"))
+print(sFeature("Ol dirty bastard put my foot in your uh."))
