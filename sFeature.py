@@ -13,20 +13,9 @@ import nltk, string, math
         -Vocabulary richness (total different words/N) (rich)
         -Words longer than 6 characters/N (longs)
         -Total number of short words (1-3 characters)/N (shorts)
-
-        -Yule’s K measure (YuleK)
-
         -Simpson’s D measure (SimpsonD)
-
         -Sichel’s S measure (SichelS)
-
         -Honore’s R measure (HonoreR)
-
-        -Entropy measure (ent)
-        
-        (Avoided for now due to degree of tedium)
-        -The number of net abbreviation /N (abbr)
-        
         (LIWC was abandonned because of lack of access)
         -Wordstat features:
             -Negative (negemo)
@@ -66,8 +55,6 @@ def sFeature(sent):
         avglen = avglen/wc
         features["avglen"] = avglen
         
-#    def yuleK(s)
-#        features["yuleK"] = yK
     def sichelS(s):
         n = len(s)
         v2 = 0
