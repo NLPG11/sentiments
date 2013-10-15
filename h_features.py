@@ -53,7 +53,7 @@ def get_function_features(sent):
 	func_feats['h_adjective_superlative'] = 0 
 	func_feats['h_adverb'] = 0
 	func_feats['h_adverb_comparitive'] = 0 
-	func_feats['h_adadverb_superlative'] = 0
+	func_feats['h_adverb_superlative'] = 0
 	func_feats['h_gender_specific'] = 0
 	func_feats['h_female_specific'] = 0
 	func_feats['h_male_specific'] = 0
@@ -91,7 +91,7 @@ def get_function_features(sent):
 			func_feats['h_adverb_comparitive']+=1
 			func_feats['h_adverb'] +=1
 		elif word[1] =='RBS':
-			func_feats['h_adverb_comparitive']+=1
+			func_feats['h_adverb_superlative']+=1
 			func_feats['h_adverb'] +=1
 
 	values = func_feats.values()
@@ -103,7 +103,47 @@ def get_function_features(sent):
 			func_feats[key+"_exists"] = 1
 		else: 
 			func_feats[key+"_exists"] = 0
-	return func_feats
+
+	'''
+	(iii) You must show for each feature that you tried to optimize it; for example, if you used unigrams, you tested for the effects of using stopwords and/or stemming, or for example for bigrams you tested for informative collocations (e.g., using mutual information or chi-square or likelihood ratio, etc) or part of speech patterns a la Turney.
+	for each feature, I considered both the original and normalized feature. I also considered if it was best to just check for the existence of that feature in the sentence. 
+
+	I only included the best features in the dictonary I used
+
+
+	adjective_superlative, was the same accross all 3
+	adverb_exists was the highest
+	adjective_comparitive_exists and adjective_comparitive were the same
+	h_adjective_exists was the highest
+	h_female_specific_exists and h_female_specific were the same
+	h_determiner_exists was the highest
+	h_adverb_superlative was the same accross all 3
+	h_male_specific was the same accross all 3
+	h_interjection was the same accross all 3 
+	h_gender_specific was the same accross all 3 
+	h_conjunction_exists was the highest
+	h_adverb_comparitive and h_adverb_comparitive_normalized
+	'''
+	best_func_feats = {}
+	
+	best_func_feats['h_adverb_exists'] = func_feats['h_adverb_exists']
+	best_func_feats['h_adjective_comparitive'] = func_feats['h_adjective_comparitive'] 
+	best_func_feats['h_adjective'] = func_feats['h_adjective'] 
+	best_func_feats['h_female_specific'] = func_feats['h_female_specific'] 
+	best_func_feats['h_determiner_exists'] = func_feats['h_determiner_exists']
+	best_func_feats['h_adverb_superlative'] = func_feats['h_adverb_superlative']
+	best_func_feats['h_male_specific'] = func_feats['h_male_specific'] 
+	
+	best_func_feats['h_interjection'] = func_feats['h_interjection'] 
+	best_func_feats['h_gender_specific'] = func_feats['h_gender_specific'] 
+	best_func_feats['h_conjunction_exists'] = func_feats['h_conjunction_exists'] 
+
+	best_func_feats['h_adverb_comparitive'] = func_feats['h_adverb_comparitive' ] 
+	return best_func_feats
+
+
+
+
 
 
  
@@ -112,7 +152,7 @@ feature_sets = [(get_function_features(n), v) for (n,v) in training_data.items()
 random.shuffle(feature_sets)
 size = int(len(feature_sets) * 0.9)
 print "trainging results"
-train_set, test_set = feature_sets[:10], feature_sets[10:20]#feature_sets[size:], feature_sets[:size]
+train_set, test_set = feature_sets[size:], feature_sets[:size]
 #train_set = [line for line in train_set if line]
 
 
@@ -128,36 +168,31 @@ classifier.show_most_informative_features()
 
 #loop though each feature individually...
 		
-classifier=[]
-feature_sets_keys =  feature_sets[0][0].keys()
-for i in range(36):
-	print i
-	feature_seti = [({feature_sets_keys[i]: n[feature_sets_keys[i]]}, v )for (n,v) in feature_sets]
-	random.shuffle(feature_seti)
-	size = int(len(feature_seti) * 0.9)
-	print "trainging results"
-	print feature_seti
-	train_seti, test_seti = feature_seti[:10], feature_seti[10:20]#feature_seti[size:], feature_seti[:size]
-	classifier[i] = nltk.NaiveBayesClassifier.train(train_seti)
-	print nltk.classify.accuracy(classifier[i], test_seti)
-	classifier[i].show_most_informative_features()
-print feature_sets_keys
-test_set_keys = feature_sets_keys
-print " heldout results"
-i = 0
-for i in range (36):
-	print i
-	print test_set_keys[i]
-	test_seti = [({test_set_keys[i]: n[test_set_keys[i]]}, v )for (n,v) in test_set]
-	print nltk.classify[i].accuracy(classifier, test_seti)
-	classifier[i].show_most_informative_features()
+# classifier=[]
+# feature_sets_keys =  feature_sets[0][0].keys()
+# for i in range(36):
+# 	print i
+# 	feature_seti = [({feature_sets_keys[i]: n[feature_sets_keys[i]]}, v )for (n,v) in feature_sets]
+# 	random.shuffle(feature_seti)
+# 	size = int(len(feature_seti) * 0.9)
+# 	print "trainging results"
+# 	print feature_seti
+# 	train_seti, test_seti = feature_seti[size:], feature_seti[:size]
+# 	classifier += [nltk.NaiveBayesClassifier.train(train_seti)]
+# 	print nltk.classify.accuracy(classifier[i], test_seti)
+# 	classifier[i].show_most_informative_features()
+# print feature_sets_keys
+# test_set_keys = feature_sets_keys
+# print " heldout results"
+# i = 0
+# for i in range (36):
+# 	print i
+# 	print test_set_keys[i]
+# 	test_seti = [({test_set_keys[i]: n[test_set_keys[i]]}, v )for (n,v) in test_set]
+# 	print nltk.classify.accuracy(classifier[i], test_seti)
+# 	classifier[i].show_most_informative_features()
 
 
 
-'''
-(iii) You must show for each feature that you tried to optimize it; for example, if you used unigrams, you tested for the effects of using stopwords and/or stemming, or for example for bigrams you tested for informative collocations (e.g., using mutual information or chi-square or likelihood ratio, etc) or part of speech patterns a la Turney.
-for each feature, I considered both the original and normalized feature. I also considered if it was best to just check for the existence of that feature in the sentence. 
 
-I commented out the suboptimal version for each feature
-'''
 #Each individual feature must be tried out on the classification task to see how well it performs on the training data and on the held-out data. (iv) These results must be reported and included in the writeup. It is expected that each person individually is able to write code to run and test the classifier in this manner on the features they produce
