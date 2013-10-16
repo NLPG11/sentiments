@@ -8,6 +8,8 @@ from os import remove, close
 import random
 from urllib import urlopen
 import os
+import string
+import ngoc_features
 #import ngoc_features
 def parse_data_set(training_path):
     training_files = []
@@ -21,14 +23,14 @@ def parse_data_set(training_path):
         parse.read_txt_data(new_training_path, training_data)
     return training_data
 
-'''
 
-training_data = parse_data_set("data/training/")
-held_data = parse_data_set("data/heldout/")
+
+'''training_data = parse_data_set("data/training/")
+held_data = parse_data_set("data/heldout/")'''
 
 #Turn all Results to -1 to 1
-training_data = parse.val_to_polarity(training_data)
-held_data = parse.val_to_polarity(held_data)'''
+#training_data = parse.val_to_polarity(training_data)
+#held_data = parse.val_to_polarity(held_data)
 
 '''This is a structural feature that does the following:
     F145 average number of chars per word
@@ -87,9 +89,13 @@ positive_words = '''able, convince, famous, imperative,
                    world-famous, worthiness, worthy '''
 positive_words = re.split(r',\s*', positive_words)
 negative_words = re.split(r',\s*', profanity_words)
+all_data = dict(training_data, **held_data)
+word_score_dict = ngoc_features.cheap_classifier(all_data)
+keys = word_score_dict.keys()
 def n_structural_features(sentence):
     dict_feature = {}
-    original_words = re.split(r'\s', sentence) #Words
+    sentence = nltk.word_tokenize(sentence)
+    original_words = [w.rstrip(string.punctuation).lstrip(string.punctuation) for w in sentence]
     words_nosw = original_words[:]
     word_length =0
     all_cap_words = False #Number of words that are all caps
@@ -99,35 +105,37 @@ def n_structural_features(sentence):
     num_neg_words = 0 #Number of Negative Words
     maybe =0
     total_word_scores = 0
-    #word_score =ngoc_features.cheap_classifier(training_data)
-    #keys = returned_word_score.keys()
+    
     for word in original_words:
         if len(word)>0:
-        #if word in keys:
-            #total_word_scores += word_score[word]
+            if word in keys:
+                total_word_scores += word_score_dict[word]
+                #print word_score_dict[word]
             if word.isupper():
-                    all_cap_words = True
+                all_cap_words = True
             elif word[0].islower():
-                    begin_lower_case +=1
+                begin_lower_case +=1
             elif word[0].isupper():
-                    begin_upper_case +=1
+                begin_upper_case +=1
             if word in positive_words:
-                    num_pos_words +=1
+                num_pos_words +=1
             elif word in negative_words:
-                    num_neg_words +=1
+                num_neg_words +=1
             if word in stopwords.words('english'): #if a stopword
-                    words_nosw.remove(word)
+                words_nosw.remove(word)
             else:
-                    word_length+=len(word)
-            
-    chars_per_word = word_length/len(words_nosw) #Average number of characters per word
-    dict_feature['n_char_per_word'] = chars_per_word
-    dict_feature['n_word_per_sentence'] = len(words_nosw)
-    dict_feature['n_all_cap_words'] = all_cap_words
-    dict_feature['n_num_uppper'] = begin_upper_case
-    dict_feature['n_num_lower'] = begin_lower_case
-    dict_feature['n_num_pos_words'] = num_pos_words
-    dict_feature['n_num_neg_words'] = num_neg_words
+                word_length+=len(word)
+
+    average_score = total_word_scores   
+    chars_per_word = word_length/(len(words_nosw)+1) #Average number of characters per word
+    #dict_feature['n_char_per_word'] = chars_per_word
+    #dict_feature['n_word_per_sentence'] = len(words_nosw)+1
+    #dict_feature['n_all_cap_words'] = all_cap_words
+    #dict_feature['n_num_uppper'] = begin_upper_case
+    #dict_feature['n_num_lower'] = begin_lower_case
+    #dict_feature['n_num_pos_words'] = num_pos_words
+    #dict_feature['n_num_neg_words'] = num_neg_words
+    dict_feature['n_average_score'] = average_score
     return dict_feature
 
 #Structural Based Features Training

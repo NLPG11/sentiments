@@ -12,10 +12,10 @@ import parse
 def get_features(sent):
     #print sent
     #z = h_features.get_function_features(sent)
-    #z.update(n_feature.n_structural_features(sent))
-    #z.update(sFeature.sFeature(sent))
     z = tristan_features.char_based_features(sent)
     z.update(tristan_features.syntactic_features(sent))
+    z.update(n_feature.n_structural_features(sent))
+    z.update(sFeature.sFeature(sent))
     return z
 
 train_base_path = "data/training/"
@@ -38,7 +38,6 @@ for held_file in held_files:
 
 #training_data = parse.val_to_polarity(training_data)
 #held_data = parse.val_to_polarity(held_data)
-polarized_held_data = parse.val_to_polarity(held_data)
 
 #testing
 feature_sets = [(get_features(n), v) for (n,v) in training_data.items()]
@@ -54,13 +53,31 @@ classifier = nltk.DecisionTreeClassifier.train(train_set)
 #classifier = nltk.weka.WekaClassifier.train(train_set)
 
 #polarized_held_data
-polatized_test_set = [(get_features(n), v) for (n,v) in polarized_held_data.items()]
+#polatized_test_set = [(get_features(n), v) for (n,v) in polarized_held_data.items()]
 held_test_set = [(get_features(n), v) for (n,v) in held_data.items()]
-classified_result = {}
+
+a = []
+b = []
+print len(held_test_set)
 for t in held_test_set:
     #pass
-    print t[0]
-    print classifier.classify(t[0])
+    #print t[1]
+    #print classifier.classify(t[0])
+    a.append(t[1])
+    b.append(classifier.classify(t[0]))
+
+correct = 0.0
+incorrect = 0.0
+#print classified_result
+for i in xrange(0, len(b)):
+    if parse.rangefy(a[i]) == parse.rangefy(b[i]):
+        correct+=1
+    else:
+        incorrect+=1
+perc = correct/(correct+incorrect)
+print correct
+print incorrect
+print "TRUE VALUE: %s" % perc
 
 
 print nltk.classify.accuracy(classifier, test_set)
