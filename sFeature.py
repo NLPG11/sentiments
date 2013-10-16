@@ -263,32 +263,44 @@ def sFeature(sent):
                 weakModal += 1
             if w in strong:
                 strongModal += 1
-        if negemo >= 2:
-            features["negemo"] = 2 
+        if negemo >= 3:
+            features["negemo"] = 3
+        elif negemo >= 1 and negemo < 3:
+            features["negemo"] = 2
         else:
             features["negemo"] = negemo 
 
-        if posemo >= 2:
+        if posemo >= 3:
+            features["posemo"] = 3
+        elif posemo >= 1 and posemo < 3:
             features["posemo"] = 2
         else:
             features["posemo"] = posemo 
 
-        if uncertain >= 2:
+        if uncertain >= 3:
+            features["uncertain"] = 3
+        elif uncertain >= 1 and uncertain < 3:
             features["uncertain"] = 2
         else:
             features["uncertain"] = uncertain 
 
-        if litig >= 2:
-            features["litig"] = 2 
+        if litig >= 3:
+            features["litig"] = 3
+        elif litig >= 1 and litig < 3:
+            features["litig"] = 2
         else:
             features["litig"] = litig 
 
-        if weakModal >= 2:
+        if weakModal >= 3:
+            features["weakModal"] = 3
+        elif weakModal >= 1 and weakModal < 3:
             features["weakModal"] = 2
         else:
             features["weakModal"] = weakModal 
 
-        if strongModal >= 2:
+        if strongModal >= 3:
+            features["strongModal"] = 3
+        elif strongModal >= 1 and strongModal < 3:
             features["strongModal"] = 2
         else:
             features["strongModal"] = strongModal 
