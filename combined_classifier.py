@@ -4,7 +4,7 @@ import nltk, string, math, csv, os, random, re, numpy
 wnl = nltk.WordNetLemmatizer()
 
 import h_features
-#import n_feature
+import n_feature
 import sFeature
 import tristan_features
 import parse
@@ -12,8 +12,8 @@ import parse
 def get_features(sent):
     #print sent
     #z.update(hn_feature.n_structural_features(sent))
-    #z = n_feature.n_structural_features(sent)
-    z = tristan_features.char_based_features(sent)
+    z = n_feature.n_structural_features(sent)
+    #z = tristan_features.char_based_features(sent)
     #z.update(tristan_features.char_based_features(sent))
     #z.update(tristan_features.syntactic_features(sent))
     #z.update(n_feature.n_structural_features(sent))
