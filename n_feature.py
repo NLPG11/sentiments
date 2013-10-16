@@ -89,20 +89,20 @@ positive_words = '''able, convince, famous, imperative,
                    world-famous, worthiness, worthy '''
 positive_words = re.split(r',\s*', positive_words)
 negative_words = re.split(r',\s*', profanity_words)
-all_data = dict(training_data, **held_data)
-word_score_dict = ngoc_features.cheap_classifier(all_data)
+#all_data = dict(training_data, **held_data)
+word_score_dict = ngoc_features.cheap_classifier(training_data)
 keys = word_score_dict.keys()
 def n_structural_features(sentence):
     dict_feature = {}
     sentence = nltk.word_tokenize(sentence)
     original_words = [w.rstrip(string.punctuation).lstrip(string.punctuation) for w in sentence]
     words_nosw = original_words[:]
-    #word_length =0
-    '''all_cap_words = False #Number of words that are all caps
+    word_length =0
+    all_cap_words = False #Number of words that are all caps
     begin_lower_case = 0 #Number of Words that are with beginning lower case.
     begin_upper_case = 0 #number of words that are beginning with upper case
     num_pos_words = 0 #Number of word that are positive
-    num_neg_words = 0 #Number of Negative Words'''
+    num_neg_words = 0 #Number of Negative Words
     maybe =0
     total_word_scores = 0
     
@@ -110,7 +110,7 @@ def n_structural_features(sentence):
         if len(word)>0:
             if word in keys:
                 total_word_scores += word_score_dict[word]
-            '''if word.isupper():
+            if word.isupper():
                 all_cap_words = True
             elif word[0].islower():
                 begin_lower_case +=1
@@ -123,7 +123,7 @@ def n_structural_features(sentence):
             if word in stopwords.words('english'): #if a stopword
                 words_nosw.remove(word)
             else:
-                word_length+=len(word)'''
+                word_length+=len(word)
 
     if total_word_scores<-.75:
         average_score = -1
@@ -134,14 +134,14 @@ def n_structural_features(sentence):
 
     
     
-    '''chars_per_word = word_length/(len(words_nosw)+1) #Average number of characters per word
+    chars_per_word = word_length/(len(words_nosw)+1) #Average number of characters per word
     #print(chars_per_word)
     if chars_per_word <3.1:
         chars_per_word = 2
     elif chars_per_word <4.3:
         chars_per_word = 4
     else:
-        chars_per_word = 5'''
+        chars_per_word = 5
         
     #dict_feature['n_char_per_word'] = chars_per_word
     #dict_feature['n_word_per_sentence'] = len(words_nosw)+1
@@ -150,11 +150,11 @@ def n_structural_features(sentence):
     #dict_feature['n_num_lower'] = begin_lower_case
     #dict_feature['n_num_pos_words'] = num_pos_words
     #dict_feature['n_num_neg_words'] = num_neg_words
-    #dict_feature['n_average_score'] = average_score
+    dict_feature['n_average_score'] = average_score
     return dict_feature
 
-'''#Structural Based Features Training
-feature_sets = [(n_structural_features(n),g) for (n,g) in training_data.items()]
+#Structural Based Features Training
+'''feature_sets = [(n_structural_features(n),g) for (n,g) in training_data.items()]
 random.shuffle(feature_sets)
 size = int(len(feature_sets)*0.9)
 print "Training Data Set"
