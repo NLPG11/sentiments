@@ -13,8 +13,9 @@ def get_features(sent):
     #print sent
     #z = h_features.get_function_features(sent)
     z = tristan_features.char_based_features(sent)
-    #z.update(tristan_features.syntactic_features(sent))
-    z.update(n_feature.n_structural_features(sent))
+    #z = sFeature.sFeature(sent)
+    z.update(tristan_features.syntactic_features(sent))
+    #z.update(n_feature.n_structural_features(sent))
     z.update(sFeature.sFeature(sent))
     return z
 
@@ -44,12 +45,12 @@ polarized_held_data = parse.val_to_polarity(held_data)
 feature_sets = [(get_features(n), v) for (n,v) in training_data.items()]
 random.shuffle(feature_sets)
 size = int(len(feature_sets) * 0.9)
-print "trainging results"
+print "training results"
 train_set, test_set = feature_sets[size:], feature_sets[:size]
 
 #print train_set
-#classifier = nltk.NaiveBayesClassifier.train(train_set)
-classifier = nltk.DecisionTreeClassifier.train(train_set)
+classifier = nltk.NaiveBayesClassifier.train(train_set)
+#classifier = nltk.DecisionTreeClassifier.train(train_set)
 #classifier = nltk.MaxentClassifier.train(train_set)
 #classifier = nltk.weka.WekaClassifier.train(train_set)
 
@@ -59,7 +60,6 @@ held_test_set = [(get_features(n), v) for (n,v) in held_data.items()]
 classified_result = {}
 for t in held_test_set:
     #pass
-    print t[0]
     print classifier.classify(t[0])
 
 
@@ -83,34 +83,14 @@ for final_test_file in final_test_files:
     file_dict = parse.read_test_data(os.path.join(final_test_path, final_test_file))
     test_file_dict[final_test_file] = file_dict
 
-print len(test_file_dict) #dict of dict. {"product1.txt":{"sent":1...}, "product2":}
 
 for file_name, text_dict in test_file_dict.items():
     keys = [int(k) for k in text_dict.keys()]
     keys.sort()
-    print keys
     for key in keys:
         line_num = key
         sentence = text_dict[str(key)]
         #TODO CHECK FOR TITLE
         output.write("%s\t%s\t%s\n" % (file_name, line_num, classifier.classify(get_features(sentence))))
 output.close()
-
-
-a = "This is the worst product ever"
-print a
-print classifier.classify(get_features(a))
-
-a = "This is the worst product ever. I will never buy this piece of shit. terrible. terrible terrible! I mean, I can't believe how bad it is!. blah!"
-print a
-print classifier.classify(get_features(a))
-
-
-a = "This is pretty damn awesome. I would definitely buy again"
-print a
-print classifier.classify(get_features(a))
-
-a = "It is better than the competition, by far!"
-print a
-print classifier.classify(get_features(a))
 
