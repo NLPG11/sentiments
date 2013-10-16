@@ -8,7 +8,7 @@ from os import remove, close
 import random
 from urllib import urlopen
 import os
-import ngoc_features
+#import ngoc_features
 def parse_data_set(training_path):
     training_files = []
     for subdir, dirs, files in os.walk(training_path):
@@ -99,11 +99,11 @@ def n_structural_features(sentence):
     num_neg_words = 0 #Number of Negative Words
     maybe =0
     total_word_scores = 0
-    word_score =ngoc_features.cheap_classifier(training_data)
+    #word_score =ngoc_features.cheap_classifier(training_data)
     keys = returned_word_score.keys()
     for word in original_words:
-        if word in keys:
-            total_word_scores += word_score[word]
+        #if word in keys:
+            #total_word_scores += word_score[word]
         if word.isupper():
             all_cap_words = True
         elif word[0].islower():
