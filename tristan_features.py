@@ -5,6 +5,7 @@ import nltk
 import os
 
 ##################################TRAIN DATA ACUISITION########
+'''
 train_base_path = "data/training/"
 train_files = ["Canon PowerShot SD500.txt", "Canon S100.txt", "Diaper Champ.txt",
                "Hitachi router.txt", "ipod.txt", "Linksys Router.txt", "MicroMP3.txt",
@@ -27,7 +28,7 @@ for held_file in held_files:
 
 training_data = parse.val_to_polarity(training_data)
 held_data = parse.val_to_polarity(held_data)
-
+'''
 def char_based_features(sent):
     '''
     F1 total number of characters in words(C)
@@ -47,7 +48,7 @@ def char_based_features(sent):
     ret["t_tab_length"] = len([c for c in sent if c == '\t'])
     #ret["t_special_length"] = (len(re.findall("\W", sent)) - ret["t_space_length"])
     return ret
-
+'''
 #char_based_features("The ipod sucks!&@") #testing
 feature_sets = [(char_based_features(n), g) for (n,g) in training_data.items()]
 random.shuffle(feature_sets)
@@ -63,7 +64,7 @@ traiin_set = feature_sets
 test_set = [(char_based_features(n), g) for (n,g) in held_data.items()]
 print nltk.classify.accuracy(classifier, test_set)
 classifier.show_most_informative_features()
-
+'''
 def syntactic_features(sent):
     '''
     #F131 number of single quotes(')/C
@@ -87,7 +88,7 @@ def syntactic_features(sent):
     #ret["t_s_ellip_length"] = len([c for c in sent if c == "..."])
     return ret
 
-
+'''
 print "SYNTACTIC FEATURE RESULTS"
 feature_sets = [(syntactic_features(n), g) for (n,g) in training_data.items()]
 random.shuffle(feature_sets)
@@ -102,4 +103,4 @@ traiin_set = feature_sets
 test_set =  [(char_based_features(n), g) for (n,g) in held_data.items()]
 print nltk.classify.accuracy(classifier, test_set)
 classifier.show_most_informative_features()
-
+'''

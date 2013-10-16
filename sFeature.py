@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
-import nltk, string, math, csv, parse, os, random, re, numpy
+import nltk, string, math, csv, parse, os, random, re, numpy, urllib
+from urllib import urlopen
 
 pos = set() 
 neg =  set()
@@ -42,26 +43,26 @@ def csvload():
             strong.add(row[0].lower())
 
 
-train_base_path = "data/training/"
-train_files = ["Canon PowerShot SD500.txt", "Canon S100.txt", "Diaper Champ.txt", "Hitachi router.txt", "ipod.txt", "Linksys Router.txt", "MicroMP3.txt","Nokia 6600.txt", "norton.txt"]
-
-training_data = {}
-for train_file in train_files:
-    train_path = os.path.join(train_base_path, train_file)
-    parse.read_txt_data(train_path, training_data)
-
-held_base_path = "data/heldout/"
-held_files = ["Apex AD2600 Progressive-scan DVD player.txt", "Canon G3.txt", "Creative Labs Nomad Jukebox Zen Xtra 40GB.txt", "Nikon coolpix 4300.txt", "Nokia 6610.txt"]
-
-held_data = {}
-for held_file in held_files:
-    held_path = os.path.join(held_base_path, held_file)
-    parse.read_txt_data(held_path, held_data)
-
-
-training_data = parse.val_to_polarity(training_data)
-held_data = parse.val_to_polarity(held_data)
-
+#train_base_path = "data/training/"
+#train_files = ["Canon PowerShot SD500.txt", "Canon S100.txt", "Diaper Champ.txt", "Hitachi router.txt", "ipod.txt", "Linksys Router.txt", "MicroMP3.txt","Nokia 6600.txt", "norton.txt"]
+#
+#training_data = {}
+#for train_file in train_files:
+#    train_path = os.path.join(train_base_path, train_file)
+#    parse.read_txt_data(train_path, training_data)
+#
+#held_base_path = "data/heldout/"
+#held_files = ["Apex AD2600 Progressive-scan DVD player.txt", "Canon G3.txt", "Creative Labs Nomad Jukebox Zen Xtra 40GB.txt", "Nikon coolpix 4300.txt", "Nokia 6610.txt"]
+#
+#held_data = {}
+#for held_file in held_files:
+#    held_path = os.path.join(held_base_path, held_file)
+#    parse.read_txt_data(held_path, held_data)
+#
+#
+#training_data = parse.val_to_polarity(training_data)
+#held_data = parse.val_to_polarity(held_data)
+#
 ''' Turney's Feature's list for the Gender Indentification paper gave us a basis
     for which features to look for. The group split up the features list. I took
     word features.
@@ -120,70 +121,55 @@ def sFeature(sent):
         
     def sichelS(s):
         n = len(s)
-        v2 = 0
         s2 = sorted(s)
-        for i in range (0, n-1):
-            if i == 0:
-                if s2[i] == s2[i+1] and s2[i] != s2[i+2]:
-                    v2 += 1
-            elif s2[i] == s2[i+1] and s2[i] != s2[i-1] and s2[i] != s2[i+2]:
-                    v2 += 1
-        S = v2/n
+        v2 = V(2, s2, n)
+        if n > 0: 
+            S = v2/n
+        else:
+            S = 0
         features["sichelS"] = S
+
+    def V(num, s1, n):
+        vm = 0
+        for i in range(0, n-1):
+            if i == 0:
+                flag = False
+                for j in range(0, num):
+                    if s1[i] == s1[i + j]:
+                        flag = True 
+                    else:
+                        flag = False 
+                if flag == True:
+                    vm += 1
+            elif s1[i] != s1[i-1]:
+                flag = False
+                for j in range(0, num):
+                    if i + j < n:
+                        if s1[i] == s1[i + j]:
+                            flag = True 
+                        else:
+                            flag = False 
+                if flag == True:
+                    vm += 1
+        return vm
             
     def simpsonD(s):
         s1 = sorted(s)
         n = len(s)
         D = 0
-
-        def V(num):
-            vm = 0
-            for i in range(0, n-1):
-                if i == 0:
-                    flag = False
-                    for j in range(0, num):
-                        if s1[i] == s1[i + j]:
-                            flag = True 
-                        else:
-                            flag = False 
-                    if flag == True:
-                        vm += 1
-                elif s1[i] != s1[i-1]:
-                    flag = False
-                    for j in range(0, num):
-                        if i + j < n:
-                            if s1[i] == s1[i + j]:
-                                flag = True 
-                            else:
-                                flag = False 
-                    if flag == True:
-                        vm += 1
-            return vm
-
         for m in range(1, n):
-            D += V(m) * (m / n) * ((m - 1)/(n-1))
-                        
+            D += V(m, s1, n) * (m / n) * ((m - 1)/(n-1))
         features["simpsonD"] = D
 
 
     def honoreR(s):
         n = len(s)
-        v1 = n 
         s2 = sorted(s)
-        for i in range(0, n-1):
-            if i == 0:
-                if s2[i] == s2[i+1]:
-                    v1 -= 2
-            else:
-                if s2[i] == s2[i+1] and s2[i] != s2[i-1]:
-                    v1 -= 2 
-                elif s2[i] == s2[i+1]:
-                    v1 -= 1
-        R = 0
-        try:
+        v1 = V(1, s2, n) 
+        if n > 0:
             R = 100 * (math.log(n)/ (1 - v1/n))
-        except ZeroDivisionError:
-            print "divide by zero"
+        else:
+            R = 0
         features["honoreR"] = R 
     
     def wordStat(s):
@@ -216,26 +202,26 @@ def sFeature(sent):
     
     basicFt(sent)
     wordStat(sent)
-    #honoreR(sent)
-    #sichelS(sent)
-    #simpsonD(sent)
+    honoreR(sent)
+    sichelS(sent)
+    simpsonD(sent)
     return features 
 
-#testing
-csvload()
-feature_sets = [(sFeature(n), v) for (n,v) in training_data.items()]
-random.shuffle(feature_sets)
-size = int(len(feature_sets) * 0.9)
-print "training results"
-train_set, test_set = feature_sets[size:], feature_sets[:size]
-#train_set = [line for line in train_set if line]
-
-classifier = nltk.NaiveBayesClassifier.train(train_set)
-print nltk.classify.accuracy(classifier, test_set)
-classifier.show_most_informative_features()
-
-print " heldout results"
-train_set = feature_sets
-test_set = [(sFeature(n), v) for (n,v) in held_data.items()]
-print nltk.classify.accuracy(classifier, test_set)
-classifier.show_most_informative_features()
+##testing
+#csvload()
+#feature_sets = [(sFeature(n), v) for (n,v) in training_data.items()]
+#random.shuffle(feature_sets)
+#size = int(len(feature_sets) * 0.9)
+#print "training results"
+#train_set, test_set = feature_sets[size:], feature_sets[:size]
+##train_set = [line for line in train_set if line]
+#
+#classifier = nltk.NaiveBayesClassifier.train(train_set)
+#print nltk.classify.accuracy(classifier, test_set)
+#classifier.show_most_informative_features()
+#
+#print " heldout results"
+#train_set = feature_sets
+#test_set = [(sFeature(n), v) for (n,v) in held_data.items()]
+#print nltk.classify.accuracy(classifier, test_set)
+#classifier.show_most_informative_features()

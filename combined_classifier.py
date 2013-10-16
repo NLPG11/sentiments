@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
-import nltk, string, math, csv, parse, os, random, re, numpy
+import nltk, string, math, csv, os, random, re, numpy
 wnl = nltk.WordNetLemmatizer()
 
 import h_features
 import n_feature
 import sFeature
 import tristan_features
-
+import parse
 
 posfile = open('wordstat/positive.csv', 'rb')
 negfile = open('wordstat/negative.csv', 'rb')
@@ -49,7 +49,7 @@ for row in reader6:
 
 def get_features(sent):
 	z= h_features.get_function_features(sent)
-	z.update(n_structural_features(sent))
+	z.update(n_feature.n_structural_features(sent))
 	z.update(sFeature.sFeature(sent))
 	z.update(tristan_features.syntactic_features(sent))
 	z.update(tristan_features.char_based_features(sent))
@@ -95,5 +95,21 @@ train_set = feature_sets
 test_set = [(get_features(n), v) for (n,v) in held_data.items()]
 print nltk.classify.accuracy(classifier, test_set)
 classifier.show_most_informative_features()
+
+
+final_test_files = ['product1.txt', 'product2.txt', 'product3.txt',
+                     'product3.txt', 'product5.txt']
+final_test_path = "sampleOutput/"
+
+test_file_dict = {} #dict of dicts
+for final_test_file in final_test_files:
+    parse.val_to_polarity(held_data)
+    file_dict = parse.read_test_data(os.path.join(final_test_path, final_test_file))
+    test_file_dict[final_test_file] = file_dict
+
+print test_file_dict
+
+test_files = []
+
 
 
