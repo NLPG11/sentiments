@@ -1,0 +1,90 @@
+1	[t]
+2	##I bought this camera about 15 days back.
+3	##I have used it a couple of times indoors  outdoors and indoors with low-light conditions.
+4	##Used correctly  this camera does a great job of taking good quality images.
+5	##I had to play with the camera for about 15-20 mins to get familiar with it so I could take the best pictures possible.
+6	##My sister owned a Powershot A530 before this one and i had the same experience with that too.
+7	##This camera fits nicely in your jeans pocket and is quite light.
+8	##You will need a tripod to take good low-light shots.
+9	##I have a cat and a rabbit and a 3 yr old nephew - The kids and pets setting really works well to take pictures of them.
+10	##Generally the few manual settings it does have are good enough for a serious amateur photographer.
+11	##One gripe I do have is that with regular AA alkaline batteries the flash recycle time can go up to 8 seconds and the camera is blank and unusable during this time.
+12	##This of course is a problem with most canon Powershots.
+13	##The solution I have found is to use batteries made specifically for taking pictures (Duracell makes some) or just use rechargeable NiMH batteries.
+14	##This works great.
+15	##Almost down to 1 sec between shots with that.
+16	##Overall I'd definitely recommend this camera to anyone.
+17	##But you have to be a little patient and get used to it first - I think this is true for any good camera out there though.
+1	[t]
+2	##This camera takes excellent pictures.
+3	##I particularly like the Optical Image Stabalization  Motion sensor  and face recognition.
+4	##I only make 4 X 6 prints.
+5	##So far no problems.
+6	##The pet/children mode does a good job of stopping action.
+7	##I've used the optical viewfinder a couple of times.
+8	##It doesn't show 100% of the picture  but it sure makes a difference in extreme sunlight.
+9	##Sometimes it is necessary indoors to increase the ISO in order to increase the flash distance (easily done with a button).
+10	##I still get great pictures.
+11	##I know some reviewers blow the pictures up and indicate the noise in the picture.
+12	##It's just not evident in normal picture prints.
+13	##I'm sure there would be obvious noise if I was using high ISOs.
+14	##Battery life is great also.
+15	##I use Lithium AAs.
+16	##They last so long there is no need to use recharageable batteries.
+17	##The only thing I definately miss is a button to delete ALL pictures.
+18	##There's a button for individual deleting  but you have to use the menu to detete all.
+19	##I guess you could look at it as a safety feature  making it hard to accidentially delete all your pictures.
+20	##There is a lack of manaul controls  but I never used the manual controls in my prior cameras.
+21	##The camera size will fit into a pocket  even though I prefer using a case that fits on my belt.
+22	##I would highly recommend this camera to others.
+1	[t]
+2	##I got this camera a few weeks ago to replace a previous Canon digital camera (the A540) that I absolutely loved.
+3	##So far I've been very happy with this one  with one glaring exception - not specifically about the camera itself  but rather the software that comes with it.
+4	##I'm an amateur photographer and find that this type of point-and-shoot works well for me - especially since it has a 4x optical zoom which gives clearer  more vivid photos.
+5	##I really like how easy the Canon cameras are to use and the range of features - and this one doesn't disappoint.
+6	##I also like the 2.5 LCD and the fact that this camera is small enough to easily fit in a pocket or purse.
+7	##It's really very versatile and I love that about it.
+8	##The only things that I really can complain about are that I do somewhat miss the chunky handgrip on my previous Canon  but that's not a huge deal.
+9	##What IS a huge deal  for me anyway  is their 'updated' version of the Camera Window software that comes with this camera.
+10	##This is the software that you run to download photos from the camera - and I can't believe how horrible this particular version is.
+11	##The previous version that I used with my other Canon camera was great - it was windows-based and you could select any photos on your card then download  print or delete them as you wished.
+12	##However  in this new version - it's got a black interface  no text by the icons to tell you what they do - and there is no way to delete the photos from your card.
+13	##I e-mailed Canon to double-check and was told that yes  this is the case - you have to use Windows Explorer to delete your photos.
+14	##Why I would want to use two different programs when before I could easily use just one is beyond me...
+15	##I'm going to re-install the old version that I have and hope that it will work with this camera  because I am incredibly annoyed with the new version right now.
+16	##Other than the software issue  I love this camera and think that it's a very good choice for someone who wants a camera that takes a great quality photo and is easy to use and carry around.
+17	##I only hope that Canon will re-think the Camera Window decision - I'm a loyal Canon enthusiast  but am very disappointed in them right now.
+1	[t]
+2	##Camera was purchased for my wife who reluctently agreed to enter the digital age.
+3	##Wanted a point and shoot camera that was compact and fairly simple to use but she still wanted occasional creative control.
+4	##She takes many photos in bright sunlight so a optical viewfinder(not too many point and shoot digitals have them) was a must since many LCD screens are difficult to see in bright light.
+5	##So far the camera has met or exceeded her expectations.
+6	##She took a whole series of photos outdoors in bright sunlight and photos taken at the Thanksgiving Dinner table and sent to the local Walgreens for processing were very good.
+7	##Took a short video with a 4GB HC card just for fun and it actually looks pretty good on playback!
+8	##All in all so far the camera is performing very well.
+1	[t]
+2	##I've had this camera for only a week  but I already love it!
+3	##Takes amazing pictures  nice and small  and very user friendly!
+4	##I didn't think I would use the red-eye fixing feature on the camera  but I do and it's cool and easy to do..works great.
+5	##I really like how when you are viewing pictures - if you turn the camera vertically  it turns the photo..very cool.
+6	##Too much to list that I do like and can't find any cons so far!
+1	[t]
+2	##This camera may be 10MP  but my 5MP Nikon Coolpix 5000 and 5400 took sharper pictures.
+3	##The body of this camera seems like flimsy plastic.
+4	##Every flash picture I've taken has suffered from redeye.
+5	##Worst of all  there are two very bright hot pixel groups which have appeared within two weeks of the camera's purchase.
+6	##These are very prominent in the viewfinder  and are quite annoying.
+7	##They show up in the final images too  but are less obvious.
+8	##The only way to get rid of these is to send the camera to Canon  to have the hot pixels remapped.
+9	##There is no way for the end user to do this himself with this camera.
+10	##Also there is no RAW mode unless you run the CHDK hacker toolkit  which hasn't yet been ported to this camera.
+11	##It seems to me that 10 megapixels exceeds the capability of the lens to deliver a sharp image.
+12	##But since there is no RAW or TIFF mode support  there's no way to know for sure.
+13	##It could just be JPEG compression noise on every freaking image  which I find disappointing.
+14	##On the positive side  the camera's face detection is excellent; the flesh tones are very real; the camera is very compact in size  and uses standard AA batteries.
+15	##The preview LCD is large  and there is also an optical viewfinder with tracking zoom.
+16	##The automatic lens cover works great.
+17	##I'm sure there are worse cameras in this price range  but I really expected more from Canon.
+18	##Bottom line: if you want something cheap  get a used Nikon coolpix.
+19	##If you really want a Canon  save your money and get a Powershot G10 for $350.
+20	##That is a superior camera.

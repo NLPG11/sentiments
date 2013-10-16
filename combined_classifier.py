@@ -4,15 +4,17 @@ import nltk, string, math, csv, os, random, re, numpy
 wnl = nltk.WordNetLemmatizer()
 
 import h_features
-#import n_feature
+import n_feature
 import sFeature
 import tristan_features
 import parse
 
 def get_features(sent):
     #print sent
-    #z.update(h_features.get_function_features(sent))
-    z = tristan_features.char_based_features(sent)
+    #z.update(hn_feature.n_structural_features(sent))
+    z = n_feature.n_structural_features(sent)
+    #z = tristan_features.char_based_features(sent)
+    #z.update(tristan_features.char_based_features(sent))
     #z.update(tristan_features.syntactic_features(sent))
     #z.update(n_feature.n_structural_features(sent))
     #z.update(sFeature.sFeature(sent))
@@ -36,14 +38,14 @@ for held_file in held_files:
     parse.read_txt_data(held_path, held_data)
 
 
-#training_data = parse.val_to_polarity(training_data)
-#held_data = parse.val_to_polarity(held_data)
+training_data = parse.val_to_polarity(training_data)
+held_data = parse.val_to_polarity(held_data)
 
 #testing
 feature_sets = [(get_features(n), v) for (n,v) in training_data.items()]
 random.shuffle(feature_sets)
 size = int(len(feature_sets) * 0.9)
-print "trainging results"
+print "training results"
 train_set, test_set = feature_sets[size:], feature_sets[:size]
 
 #print train_set
@@ -81,18 +83,17 @@ print "TRUE VALUE: %s" % perc
 
 
 print nltk.classify.accuracy(classifier, test_set)
-#classifier.show_most_informative_features()
+classifier.show_most_informative_features()
 
 print " heldout results"
 train_set = feature_sets
 test_set = [(get_features(n), v) for (n,v) in held_data.items()]
 print nltk.classify.accuracy(classifier, test_set)
-#classifier.show_most_informative_features()
+classifier.show_most_informative_features()
 
-final_test_files = ['product1.txt', 'product2.txt', 'product3.txt',
-                     'product4.txt']
-final_test_path = "sampleOutput/"
-output_file_path = "sampleOutput/classified_output.txt"
+final_test_files = ['product1.txt', 'product2.txt', 'product3.txt']
+final_test_path = "data/testdata/"
+output_file_path = "data/testdata/classified_output.txt"
 output = f = open(output_file_path, 'w+')
 
 test_file_dict = {} #dict of dicts
@@ -102,7 +103,8 @@ for final_test_file in final_test_files:
 
 print len(test_file_dict) #dict of dict. {"product1.txt":{"sent":1...}, "product2":}
 
-for file_name, text_dict in test_file_dict.items():
+for file_name in final_test_files:
+    text_dict = test_file_dict[file_name]
     keys = [int(k) for k in text_dict.keys()]
     keys.sort()
     print keys
