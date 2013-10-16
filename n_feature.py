@@ -100,7 +100,7 @@ def n_structural_features(sentence):
     maybe =0
     total_word_scores = 0
     #word_score =ngoc_features.cheap_classifier(training_data)
-    keys = returned_word_score.keys()
+    #keys = returned_word_score.keys()
     for word in original_words:
         #if word in keys:
             #total_word_scores += word_score[word]

@@ -59,23 +59,25 @@ print nltk.classify.accuracy(classifier, test_set)
 #classifier.show_most_informative_features()
 
 final_test_files = ['product1.txt', 'product2.txt', 'product3.txt',
-                     'product3.txt']
+                     'product4.txt']
 final_test_path = "sampleOutput/"
 output_file_path = "sampleOutput/classified_output.txt"
 output = f = open(output_file_path, 'w+')
 
 test_file_dict = {} #dict of dicts
 for final_test_file in final_test_files:
-    parse.val_to_polarity(held_data)
     file_dict = parse.read_test_data(os.path.join(final_test_path, final_test_file))
     test_file_dict[final_test_file] = file_dict
 
-print test_file_dict #dict of dict. {"product1.txt":{"sent":1...}, "product2":}
+print len(test_file_dict) #dict of dict. {"product1.txt":{"sent":1...}, "product2":}
 
 for file_name, text_dict in test_file_dict.items():
-    for line_num, sentence in text_dict.items():
-        #print "DO file: %s, %s, %s" % (file_name, line_num, sentence)
-        #print "%s\t%s\t%s" % (file_name, line_num, classifier.classify(get_features(sentence)))
+    keys = [int(k) for k in text_dict.keys()]
+    keys.sort()
+    print keys
+    for key in keys:
+        line_num = key
+        sentence = text_dict[str(key)]
         output.write("%s\t%s\t%s\n" % (file_name, line_num, classifier.classify(get_features(sentence))))
 
 output.close()
