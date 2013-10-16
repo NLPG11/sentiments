@@ -76,7 +76,7 @@ for held_file in held_files:
 training_data = parse.val_to_polarity(training_data)
 held_data = parse.val_to_polarity(held_data)
 
- 
+
 #testing
 feature_sets = [(get_features(n), v) for (n,v) in training_data.items()]
 random.shuffle(feature_sets)
