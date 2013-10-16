@@ -4,18 +4,20 @@ import nltk, string, math, csv, os, random, re, numpy
 wnl = nltk.WordNetLemmatizer()
 
 import h_features
-#import n_feature
+import n_feature
 import sFeature
 import tristan_features
 import parse
 
 def get_features(sent):
     #print sent
-    #z.update(h_features.get_function_features(sent))
-    z = tristan_features.char_based_features(sent)
-    #z.update(tristan_features.syntactic_features(sent))
-    #z.update(n_feature.n_structural_features(sent))
-    #z.update(sFeature.sFeature(sent))
+    z = n_feature.n_structural_features(sent)
+    z.update(h_features.get_function_features(sent))
+    z.update(tristan_features.char_based_features(sent))
+    #z = tristan_features.char_based_features(sent)
+    z.update(tristan_features.syntactic_features(sent))
+    z.update(n_feature.n_structural_features(sent))
+    z.update(sFeature.sFeature(sent))
     return z
 
 train_base_path = "data/training/"
@@ -36,8 +38,8 @@ for held_file in held_files:
     parse.read_txt_data(held_path, held_data)
 
 
-#training_data = parse.val_to_polarity(training_data)
-#held_data = parse.val_to_polarity(held_data)
+training_data = parse.val_to_polarity(training_data)
+held_data = parse.val_to_polarity(held_data)
 
 #testing
 feature_sets = [(get_features(n), v) for (n,v) in training_data.items()]
@@ -47,8 +49,8 @@ print "trainging results"
 train_set, test_set = feature_sets[size:], feature_sets[:size]
 
 #print train_set
-classifier = nltk.NaiveBayesClassifier.train(train_set)
-#classifier = nltk.DecisionTreeClassifier.train(train_set)
+#classifier = nltk.NaiveBayesClassifier.train(train_set)
+classifier = nltk.DecisionTreeClassifier.train(train_set)
 #classifier = nltk.MaxentClassifier.train(train_set)
 #classifier = nltk.weka.WekaClassifier.train(train_set)
 
