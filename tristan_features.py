@@ -25,7 +25,6 @@ for held_file in held_files:
     held_path = os.path.join(held_base_path, held_file)
     parse.read_txt_data(held_path, held_data)
 
-
 training_data = parse.val_to_polarity(training_data)
 held_data = parse.val_to_polarity(held_data)
 
@@ -44,9 +43,9 @@ def char_based_features(sent):
     ret["t_alpha_length"] = len([c for c in sent if c.isalpha()]) > 0
     ret["t_upper_length"] = len([c for c in sent if c.isupper()]) > 0
     ret["t_digit_length"] = len([c for c in sent if c.isdigit()]) > 0
-    ret["t_space_length"] = len([c for c in sent if c == ' '])
+    #ret["t_space_length"] = len([c for c in sent if c == ' '])
     ret["t_tab_length"] = len([c for c in sent if c == '\t'])
-    ret["t_special_length"] = (len(re.findall("\W", sent)) - ret["t_space_length"])
+    #ret["t_special_length"] = (len(re.findall("\W", sent)) - ret["t_space_length"])
     return ret
 
 #char_based_features("The ipod sucks!&@") #testing
