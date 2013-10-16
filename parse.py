@@ -36,6 +36,7 @@ def add_data(training, temp_feat):
         if not remove is None:
             target = target.replace(remove.group(1), "").strip() #remove the head
         training[target] = val
+    #print val
 
 def val_to_polarity(training_data):
     '''Given a training data, changes all vals (such as -2, -1, 0, 1, 4) 
@@ -43,7 +44,7 @@ def val_to_polarity(training_data):
     '''
     new_data = {}
     for k, v in training_data.items():
-        if v == 1:
+        if v == 1 or v == 0:
             new_data[k] = 0
         elif v > 1:
             new_data[k] = 1
@@ -90,6 +91,16 @@ def read_test_data(path):
 #    print len(temp_dict)
     return temp_dict
 
+
+def rangefy(v):
+    ret = None
+    if v == 0 or v == 1:
+        ret = 0
+    elif v > 1:
+        ret = 1
+    else:
+        ret = -1
+    return ret
 
 #parse.read_test_data("sampleOutput/product1.txt")
 
