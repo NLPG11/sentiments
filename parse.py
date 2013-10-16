@@ -40,7 +40,7 @@ def add_data(training, temp_feat):
 
 def val_to_polarity(training_data):
     '''Given a training data, changes all vals (such as -2, -1, 0, 1, 4) 
-    into polarity (-1, 0, 1). 
+    into polarity (-1, 0, 1).
     '''
     new_data = {}
     for k, v in training_data.items():
