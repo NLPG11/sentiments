@@ -25,8 +25,8 @@ def parse_data_set(training_path):
 
 
 
-'''training_data = parse_data_set("data/training/")
-held_data = parse_data_set("data/heldout/")'''
+training_data = parse_data_set("data/training/")
+held_data = parse_data_set("data/heldout/")
 
 #Turn all Results to -1 to 1
 #training_data = parse.val_to_polarity(training_data)
