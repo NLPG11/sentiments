@@ -77,7 +77,7 @@ held_data = parse.val_to_polarity(held_data)
 
  
 #testing
-feature_sets = [(get_function_features(n), v) for (n,v) in training_data.items()]
+feature_sets = [(get_features(n), v) for (n,v) in training_data.items()]
 random.shuffle(feature_sets)
 size = int(len(feature_sets) * 0.9)
 print "trainging results"
@@ -91,7 +91,7 @@ classifier.show_most_informative_features()
 
 print " heldout results"
 train_set = feature_sets
-test_set = [(get_function_features(n), v) for (n,v) in held_data.items()]
+test_set = [(get_features(n), v) for (n,v) in held_data.items()]
 print nltk.classify.accuracy(classifier, test_set)
 classifier.show_most_informative_features()
 
