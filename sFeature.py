@@ -97,12 +97,27 @@ def sFeature(sent):
 
     def basicFt(s):
         wc = len(s)
-        features["wc"] = wc       
+        if wc >= 40:
+            features["wc"] = 5
+        elif wc < 40 and wc >= 30:
+            features["wc"] = 4       
+        elif wc < 30 and wc >= 20:
+            features["wc"] = 3       
+        elif wc >= 10:
+            features["wc"] = 2       
+        else:
+            features["wc"] = 1
+            
 
         rich = 0
         if wc > 0:
             rich = len(set(s))/wc
-        features["rich"] = rich
+        if rich > 0.667:
+            features["rich"] = 3
+        elif rich > 0.333 and rich < 0.667:
+            features["rich"] = 2
+        else:
+            features["rich"] = 1
 
         avglen = 0
         longs = 0
@@ -113,11 +128,38 @@ def sFeature(sent):
             if len(w) < 4:
                 shorts += 1
             avglen += len(w)
-        features["longs"] = longs
-        features["shorts"] = shorts 
+
+        if longs < 4:
+            features["longs"] = 1
+        if longs >= 4 and longs < 8:
+            features["longs"] = 2
+        if longs >= 8:
+            features["longs"] = 3
+
+        if shorts < 4:
+            features["shorts"] = 1
+        if shorts >= 4 and shorts < 10:
+            features["shorts"] = 2
+        if shorts >= 10 and shorts < 20:
+            features["shorts"] = 3
+        if shorts >= 20:
+            features["shorts"] = 4
+
         if wc > 0:
             avglen = avglen/wc
-        features["avglen"] = avglen
+
+        if avglen < 2:
+            features["avglen"] = 1
+        if avglen >= 2 and avglen < 3:
+            features["avglen"] = 2
+        if avglen >= 3 and avglen < 3.5:
+            features["avglen"] = 3
+        if avglen >= 3.5 and avglen < 4:
+            features["avglen"] = 4
+        if avglen >= 4 and avglen < 5:
+            features["avglen"] = 5
+        if avglen >= 5:
+            features["avglen"] = 6
         
     def sichelS(s):
         n = len(s)
@@ -127,7 +169,18 @@ def sFeature(sent):
             S = v2/n
         else:
             S = 0
-        features["sichelS"] = S
+
+        if S < 0.1 and S > 0:
+            features["sichelS"] = 1
+        elif S < 0.2 and S >= 0.1:
+            features["sichelS"] = 2
+        elif S >= 0.2 and S < 0.3:
+            features["sichelS"] =  3
+        elif S >= 0.3:
+            features["sichelS"] =  4
+        else: 
+            features["sichelS"] = 0
+                
 
     def V(num, s1, n):
         vm = 0
@@ -159,7 +212,18 @@ def sFeature(sent):
         D = 0
         for m in range(1, n):
             D += V(m, s1, n) * (m / n) * ((m - 1)/(n-1))
-        features["simpsonD"] = D
+
+        if D < 0.01 and D > 0:
+            features["simpsonD"] = 1
+        elif D >= 0.01 and D < 0.3:
+            features["simpsonD"] =  2
+        elif D >= 0.3 and D < 1:
+            features["simpsonD"] =  3
+        elif D >= 1:
+            features["simpsonD"] =  4
+        else: 
+            features["simpsonD"] = 0
+
 
 
     def honoreR(s):
@@ -170,7 +234,14 @@ def sFeature(sent):
             R = 100 * (math.log(n)/ (1 - v1/n))
         else:
             R = 0
-        features["honoreR"] = R 
+        if R < 1000:
+            features["honoreR"] = 1
+        if R < 2000 and R >= 1000:
+            features["honoreR"] = 2
+        if R < 3000 and R >= 2000:
+            features["honoreR"] = 3
+        if R > 3000:
+            features["honoreR"] = 4
     
     def wordStat(s):
         posemo = 0
@@ -192,13 +263,35 @@ def sFeature(sent):
                 weakModal += 1
             if w in strong:
                 strongModal += 1
-            
-        features["negemo"] = negemo 
-        features["posemo"] = posemo 
-        features["uncertain"] = uncertain 
-        features["litig"] = litig 
-        features["weakModal"] = weakModal 
-        features["strongModal"] = strongModal 
+        if negemo >= 2:
+            features["negemo"] = 2 
+        else:
+            features["negemo"] = negemo 
+
+        if posemo >= 2:
+            features["posemo"] = 2
+        else:
+            features["posemo"] = posemo 
+
+        if uncertain >= 2:
+            features["uncertain"] = 2
+        else:
+            features["uncertain"] = uncertain 
+
+        if litig >= 2:
+            features["litig"] = 2 
+        else:
+            features["litig"] = litig 
+
+        if weakModal >= 2:
+            features["weakModal"] = 2
+        else:
+            features["weakModal"] = weakModal 
+
+        if strongModal >= 2:
+            features["strongModal"] = 2
+        else:
+            features["strongModal"] = strongModal 
     
     basicFt(sent)
     wordStat(sent)
@@ -208,7 +301,6 @@ def sFeature(sent):
     return features 
 
 ##testing
-#csvload()
 #feature_sets = [(sFeature(n), v) for (n,v) in training_data.items()]
 #random.shuffle(feature_sets)
 #size = int(len(feature_sets) * 0.9)
