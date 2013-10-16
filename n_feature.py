@@ -143,8 +143,8 @@ def n_structural_features(sentence):
     else:
         chars_per_word = 5
         
-    dict_feature['n_char_per_word'] = chars_per_word
-    dict_feature['n_word_per_sentence'] = len(words_nosw)+1
+    #dict_feature['n_char_per_word'] = chars_per_word
+    #dict_feature['n_word_per_sentence'] = len(words_nosw)+1
     #dict_feature['n_all_cap_words'] = all_cap_words
     #dict_feature['n_num_uppper'] = begin_upper_case
     #dict_feature['n_num_lower'] = begin_lower_case
@@ -154,7 +154,7 @@ def n_structural_features(sentence):
     return dict_feature
 
 #Structural Based Features Training
-feature_sets = [(n_structural_features(n),g) for (n,g) in training_data.items()]
+'''feature_sets = [(n_structural_features(n),g) for (n,g) in training_data.items()]
 random.shuffle(feature_sets)
 size = int(len(feature_sets)*0.9)
 print "Training Data Set"
@@ -167,4 +167,4 @@ print nltk.classify.accuracy(classifier,test_set)
 print "Held Data Set"
 test_set = [(n_structural_features(n), g) for (n,g) in held_data.items()]
 print nltk.classify.accuracy(classifier, test_set)
-#classifier.show_most_informative_features()
+#classifier.show_most_informative_features()'''
