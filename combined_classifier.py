@@ -59,7 +59,7 @@ held_test_set = [(get_features(n), v) for (n,v) in held_data.items()]
 classified_result = {}
 for t in held_test_set:
     #pass
-    print t[0]
+    print t
     print classifier.classify(t[0])
 
 
