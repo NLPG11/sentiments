@@ -9,43 +9,6 @@ import sFeature
 import tristan_features
 import parse
 
-posfile = open('wordstat/positive.csv', 'rb')
-negfile = open('wordstat/negative.csv', 'rb')
-litfile = open('wordstat/litigious.csv', 'rb')
-unfile = open('wordstat/uncertainty.csv', 'rb')
-weakfile = open('wordstat/modalWeak.csv', 'rb')
-strongfile = open('wordstat/modalStrong.csv', 'rb')
-reader1 = csv.reader(posfile)
-reader2 = csv.reader(negfile)
-reader3 = csv.reader(litfile)
-reader4 = csv.reader(unfile)
-reader5 = csv.reader(weakfile)
-reader6 = csv.reader(strongfile)
-pos = set() 
-for row in reader1:
-    if len(row) == 1:
-        pos.add(row[0].lower())
-neg =  set()
-for row in reader2:
-    if len(row) == 1:
-        neg.add(row[0].lower())
-lit = set()
-for row in reader3:
-    if len(row) == 1:
-        lit.add(row[0].lower())
-un = set() 
-for row in reader4:
-    if len(row) == 1:
-        un.add(row[0].lower())
-weak = set()
-for row in reader5:
-    if len(row) == 1:
-        weak.add(row[0].lower())
-strong = set()
-for row in reader6:
-    if len(row) == 1:
-        strong.add(row[0].lower())
-
 def get_features(sent):
     #z = h_features.get_function_features(sent)
     #z.update(n_feature.n_structural_features(sent))
