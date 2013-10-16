@@ -44,7 +44,7 @@ def val_to_polarity(training_data):
     '''
     new_data = {}
     for k, v in training_data.items():
-        if v == 1:
+        if v == 1 or v == 0:
             new_data[k] = 0
         elif v > 1:
             new_data[k] = 1
