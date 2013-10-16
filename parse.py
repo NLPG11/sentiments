@@ -87,11 +87,11 @@ def read_test_data(path):
     for line in text_file:
         sep = line.split("\t")
         temp_dict[sep[0]] = sep[1].strip()
-    print temp_dict
+    #print temp_dict
     return temp_dict
 
-import parse
-parse.read_test_data("sampleOutput/product1.txt")
+
+#parse.read_test_data("sampleOutput/product1.txt")
 
 #print len(training_data)
 #print training_data
