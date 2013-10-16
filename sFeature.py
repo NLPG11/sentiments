@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
-import nltk, string, math, csv, parse, os, random, re, numpy, urllib
-from urllib import urlopen
+import nltk, string, math, csv, parse, os, random, re, numpy
 
 pos = set() 
 neg =  set()
@@ -41,6 +40,7 @@ def csvload():
     for row in reader6:
         if len(row) == 1:
             strong.add(row[0].lower())
+csvload()
 
 
 #train_base_path = "data/training/"
