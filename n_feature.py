@@ -8,23 +8,27 @@ from os import remove, close
 import random
 from urllib import urlopen
 import os
+import ngoc_features
 def parse_data_set(training_path):
     training_files = []
     for subdir, dirs, files in os.walk(training_path):
         for a_file in files:
             if '.txt' in a_file:
                 training_files.append(a_file)
-
     training_data ={}
     for a_file in training_files:
         new_training_path = os.path.join(training_path, a_file)
         parse.read_txt_data(new_training_path, training_data)
     return training_data
 
-
+'''
 
 training_data = parse_data_set("data/training/")
 held_data = parse_data_set("data/heldout/")
+
+#Turn all Results to -1 to 1
+training_data = parse.val_to_polarity(training_data)
+held_data = parse.val_to_polarity(held_data)'''
 
 '''This is a structural feature that does the following:
     F145 average number of chars per word
@@ -85,53 +89,48 @@ positive_words = re.split(r',\s*', positive_words)
 negative_words = re.split(r',\s*', profanity_words)
 def n_structural_features(sentence):
     dict_feature = {}
-    original_words = re.split(r' ', sentence) #Words
+    original_words = re.split(r'\s', sentence) #Words
     words_nosw = original_words[:]
     word_length =0
-    all_cap_words = 0#Number of words that are all caps
+    all_cap_words = False #Number of words that are all caps
     begin_lower_case = 0 #Number of Words that are with beginning lower case.
     begin_upper_case = 0 #number of words that are beginning with upper case
     num_pos_words = 0 #Number of word that are positive
     num_neg_words = 0 #Number of Negative Words
-    for word in words_nosw:
-        if(len(word)>0):
-            if word.isupper():
-                all_cap_words+=1
-            elif word[0].islower():
-                begin_lower_case +=1
-            elif word[0].isupper():
-                begin_upper_case +=1
-            elif word in positive_words:
-                num_pos_words +=1
-            elif word in negative_words:
-                num_neg_words +=1
-        if word in stopwords.words('english'): #if not a stopword
-            word_length+= len(word)
+    maybe =0
+    total_word_scores = 0
+    word_score =ngoc_features.cheap_classifier(training_data)
+    keys = returned_word_score.keys()
+    for word in original_words:
+        if word in keys:
+            total_word_scores += word_score[word]
+        if word.isupper():
+            all_cap_words = True
+        elif word[0].islower():
+            begin_lower_case +=1
+        elif word[0].isupper():
+            begin_upper_case +=1
+        if word in positive_words:
+            num_pos_words +=1
+        elif word in negative_words:
+            num_neg_words +=1
+        if word in stopwords.words('english'): #if a stopword
             words_nosw.remove(word)
+        else:
+            word_length+=len(word)
             
-    chars_per_word = word_length/len(original_words) #Average number of characters per word
-    #Discounting stopwords
-    #Print chars_per_word
-    #print("Number of chars per word: ", chars_per_word)
+    chars_per_word = word_length/len(words_nosw) #Average number of characters per word
     dict_feature['n_char_per_word'] = chars_per_word
-    #Print number of words per sentence
-    #print("Words in the sentence: ", len(words_nosw))
     dict_feature['n_word_per_sentence'] = len(words_nosw)
-    #Print number of words that are all caps
-    #print("Number of all cap words: ", all_cap_words)
     dict_feature['n_all_cap_words'] = all_cap_words
-    #Print number of words that are beginning upper case:
-    #print("Number of all upper case words: ", begin_upper_case)
     dict_feature['n_num_uppper'] = begin_upper_case
-    #Print number of words that are beginning lower case:
     dict_feature['n_num_lower'] = begin_lower_case
-    #print("Number of all lower case words: ", begin_lower_case)
     dict_feature['n_num_pos_words'] = num_pos_words
     dict_feature['n_num_neg_words'] = num_neg_words
     return dict_feature
 
 #Structural Based Features Training
-feature_sets = [(n_structural_features(n),g) for (n,g) in training_data.items()]
+'''feature_sets = [(n_structural_features(n),g) for (n,g) in training_data.items()]
 random.shuffle(feature_sets)
 size = int(len(feature_sets)*0.9)
 print "Training Data Set"
@@ -144,5 +143,4 @@ classifier.show_most_informative_features()
 print "Held Data Set"
 test_set = [(n_structural_features(n), g) for (n,g) in held_data.items()]
 print nltk.classify.accuracy(classifier, test_set)
-classifier.show_most_informative_features()
-test_set 
+classifier.show_most_informative_features()'''
