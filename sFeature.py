@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
-import nltk, string, math, csv, parse, os, random, re, numpy
+import nltk, string, math, csv, parse, os, random, re, numpy, urllib
+from urllib import urlopen
 
 pos = set() 
 neg =  set()
@@ -120,70 +121,55 @@ def sFeature(sent):
         
     def sichelS(s):
         n = len(s)
-        v2 = 0
         s2 = sorted(s)
-        for i in range (0, n-1):
-            if i == 0:
-                if s2[i] == s2[i+1] and s2[i] != s2[i+2]:
-                    v2 += 1
-            elif s2[i] == s2[i+1] and s2[i] != s2[i-1] and s2[i] != s2[i+2]:
-                    v2 += 1
-        S = v2/n
+        v2 = V(2, s2, n)
+        if n > 0: 
+            S = v2/n
+        else:
+            S = 0
         features["sichelS"] = S
+
+    def V(num, s1, n):
+        vm = 0
+        for i in range(0, n-1):
+            if i == 0:
+                flag = False
+                for j in range(0, num):
+                    if s1[i] == s1[i + j]:
+                        flag = True 
+                    else:
+                        flag = False 
+                if flag == True:
+                    vm += 1
+            elif s1[i] != s1[i-1]:
+                flag = False
+                for j in range(0, num):
+                    if i + j < n:
+                        if s1[i] == s1[i + j]:
+                            flag = True 
+                        else:
+                            flag = False 
+                if flag == True:
+                    vm += 1
+        return vm
             
     def simpsonD(s):
         s1 = sorted(s)
         n = len(s)
         D = 0
-
-        def V(num):
-            vm = 0
-            for i in range(0, n-1):
-                if i == 0:
-                    flag = False
-                    for j in range(0, num):
-                        if s1[i] == s1[i + j]:
-                            flag = True 
-                        else:
-                            flag = False 
-                    if flag == True:
-                        vm += 1
-                elif s1[i] != s1[i-1]:
-                    flag = False
-                    for j in range(0, num):
-                        if i + j < n:
-                            if s1[i] == s1[i + j]:
-                                flag = True 
-                            else:
-                                flag = False 
-                    if flag == True:
-                        vm += 1
-            return vm
-
         for m in range(1, n):
-            D += V(m) * (m / n) * ((m - 1)/(n-1))
-                        
+            D += V(m, s1, n) * (m / n) * ((m - 1)/(n-1))
         features["simpsonD"] = D
 
 
     def honoreR(s):
         n = len(s)
-        v1 = n 
         s2 = sorted(s)
-        for i in range(0, n-1):
-            if i == 0:
-                if s2[i] == s2[i+1]:
-                    v1 -= 2
-            else:
-                if s2[i] == s2[i+1] and s2[i] != s2[i-1]:
-                    v1 -= 2 
-                elif s2[i] == s2[i+1]:
-                    v1 -= 1
-        R = 0
-        try:
+        v1 = V(1, s2, n) 
+        if n > 0:
             R = 100 * (math.log(n)/ (1 - v1/n))
-        except ZeroDivisionError:
-            print "divide by zero"
+        else:
+            R = 0
         features["honoreR"] = R 
     
     def wordStat(s):
@@ -216,9 +202,9 @@ def sFeature(sent):
     
     basicFt(sent)
     wordStat(sent)
-    #honoreR(sent)
-    #sichelS(sent)
-    #simpsonD(sent)
+    honoreR(sent)
+    sichelS(sent)
+    simpsonD(sent)
     return features 
 
 #testing
