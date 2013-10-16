@@ -9,50 +9,13 @@ import sFeature
 import tristan_features
 import parse
 
-posfile = open('wordstat/positive.csv', 'rb')
-negfile = open('wordstat/negative.csv', 'rb')
-litfile = open('wordstat/litigious.csv', 'rb')
-unfile = open('wordstat/uncertainty.csv', 'rb')
-weakfile = open('wordstat/modalWeak.csv', 'rb')
-strongfile = open('wordstat/modalStrong.csv', 'rb')
-reader1 = csv.reader(posfile)
-reader2 = csv.reader(negfile)
-reader3 = csv.reader(litfile)
-reader4 = csv.reader(unfile)
-reader5 = csv.reader(weakfile)
-reader6 = csv.reader(strongfile)
-pos = set() 
-for row in reader1:
-    if len(row) == 1:
-        pos.add(row[0].lower())
-neg =  set()
-for row in reader2:
-    if len(row) == 1:
-        neg.add(row[0].lower())
-lit = set()
-for row in reader3:
-    if len(row) == 1:
-        lit.add(row[0].lower())
-un = set() 
-for row in reader4:
-    if len(row) == 1:
-        un.add(row[0].lower())
-weak = set()
-for row in reader5:
-    if len(row) == 1:
-        weak.add(row[0].lower())
-strong = set()
-for row in reader6:
-    if len(row) == 1:
-        strong.add(row[0].lower())
-
 def get_features(sent):
-    z= h_features.get_function_features(sent)
-	z.update(n_feature.n_structural_features(sent))
-	z.update(sFeature.sFeature(sent))
-	z.update(tristan_features.syntactic_features(sent))
-	z.update(tristan_features.char_based_features(sent))
-
+    #z = h_features.get_function_features(sent)
+    #z.update(n_feature.n_structural_features(sent))
+    #z.update(sFeature.sFeature(sent))
+    #z.update(tristan_features.syntactic_features(sent))
+    z = tristan_features.char_based_features(sent)
+    return z
 
 train_base_path = "data/training/"
 train_files = ["Canon PowerShot SD500.txt", "Canon S100.txt", "Diaper Champ.txt", "Hitachi router.txt", "ipod.txt", "Linksys Router.txt", "MicroMP3.txt","Nokia 6600.txt", "norton.txt"]
@@ -84,31 +47,41 @@ print "trainging results"
 train_set, test_set = feature_sets[size:], feature_sets[:size] ####confused as to why we need two test sets????????? 
 #train_set = [line for line in train_set if line]
 
-
-classifier = nltk.NaiveBayesClassifier.train(train_set)
+#classifier = nltk.NaiveBayesClassifier.train(train_set)
+classifier = nltk.DecisionTreeClassifier.train(train_set)
 print nltk.classify.accuracy(classifier, test_set)
-classifier.show_most_informative_features()
+#classifier.show_most_informative_features()
 
 print " heldout results"
 train_set = feature_sets
 test_set = [(get_features(n), v) for (n,v) in held_data.items()]
 print nltk.classify.accuracy(classifier, test_set)
-classifier.show_most_informative_features()
-
+#classifier.show_most_informative_features()
 
 final_test_files = ['product1.txt', 'product2.txt', 'product3.txt',
-                     'product3.txt', 'product5.txt']
+                     'product4.txt']
 final_test_path = "sampleOutput/"
+output_file_path = "sampleOutput/classified_output.txt"
+output = f = open(output_file_path, 'w+')
 
 test_file_dict = {} #dict of dicts
 for final_test_file in final_test_files:
-    parse.val_to_polarity(held_data)
     file_dict = parse.read_test_data(os.path.join(final_test_path, final_test_file))
     test_file_dict[final_test_file] = file_dict
 
-print test_file_dict
+print len(test_file_dict) #dict of dict. {"product1.txt":{"sent":1...}, "product2":}
 
-test_files = []
+for file_name, text_dict in test_file_dict.items():
+    keys = [int(k) for k in text_dict.keys()]
+    keys.sort()
+    print keys
+    for key in keys:
+        line_num = key
+        sentence = text_dict[str(key)]
+        output.write("%s\t%s\t%s\n" % (file_name, line_num, classifier.classify(get_features(sentence))))
+
+output.close()
+
 
 
 

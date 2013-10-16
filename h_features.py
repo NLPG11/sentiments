@@ -125,23 +125,23 @@ def get_function_features(sent):
 	h_conjunction_exists was the highest
 	h_adverb_comparitive and h_adverb_comparitive_normalized
 	'''
-# 	best_func_feats = {}
+	best_func_feats = {}
 	
-# 	best_func_feats['h_adverb_exists'] = func_feats['h_adverb_exists']
-# 	best_func_feats['h_adjective_comparitive'] = func_feats['h_adjective_comparitive'] 
-# 	best_func_feats['h_adjective'] = func_feats['h_adjective'] 
-# 	best_func_feats['h_female_specific'] = func_feats['h_female_specific'] 
-# 	best_func_feats['h_determiner_exists'] = func_feats['h_determiner_exists']
-# 	best_func_feats['h_adverb_superlative'] = func_feats['h_adverb_superlative']
-# 	best_func_feats['h_male_specific'] = func_feats['h_male_specific'] 
+	best_func_feats['h_adverb_exists'] = func_feats['h_adverb_exists']
+	best_func_feats['h_adjective_comparitive'] = func_feats['h_adjective_comparitive'] 
+	best_func_feats['h_adjective'] = func_feats['h_adjective'] 
+	best_func_feats['h_female_specific'] = func_feats['h_female_specific'] 
+	best_func_feats['h_determiner_exists'] = func_feats['h_determiner_exists']
+	best_func_feats['h_adverb_superlative'] = func_feats['h_adverb_superlative']
+	best_func_feats['h_male_specific'] = func_feats['h_male_specific'] 
 	
-# 	best_func_feats['h_interjection'] = func_feats['h_interjection'] 
-# 	best_func_feats['h_gender_specific'] = func_feats['h_gender_specific'] 
-# 	best_func_feats['h_conjunction_exists'] = func_feats['h_conjunction_exists'] 
+	best_func_feats['h_interjection'] = func_feats['h_interjection'] 
+	best_func_feats['h_gender_specific'] = func_feats['h_gender_specific'] 
+	best_func_feats['h_conjunction_exists'] = func_feats['h_conjunction_exists'] 
 
-# 	best_func_feats['h_adverb_comparitive'] = func_feats['h_adverb_comparitive' ] 
-# 	#return best_func_feats
-# 	return func_feats
+	best_func_feats['h_adverb_comparitive'] = func_feats['h_adverb_comparitive' ] 
+	#return best_func_feats
+	return func_feats
 
 
 
