@@ -8,7 +8,6 @@ import n_feature
 import sFeature
 import tristan_features
 
-
 posfile = open('wordstat/positive.csv', 'rb')
 negfile = open('wordstat/negative.csv', 'rb')
 litfile = open('wordstat/litigious.csv', 'rb')
@@ -97,3 +96,6 @@ print nltk.classify.accuracy(classifier, test_set)
 classifier.show_most_informative_features()
 
 
+final_test_finals = ['product1', 'product2', 'product3','product4',
+                     'product5']
+test_files = []
