@@ -92,6 +92,16 @@ def read_test_data(path):
     return temp_dict
 
 
+def rangefy(v):
+    ret = None
+    if v == 0 or v == 1:
+        ret = 0
+    elif v > 1:
+        ret = 1
+    else:
+        ret = -1
+    return ret
+
 #parse.read_test_data("sampleOutput/product1.txt")
 
 #print len(training_data)
