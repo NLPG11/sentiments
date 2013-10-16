@@ -14,26 +14,26 @@ Training data format is also a dictionary. It will consist of the sentence, plus
 
 
 
-train_base_path = "data/training/"
-train_files = ["Canon PowerShot SD500.txt", "Canon S100.txt", "Diaper Champ.txt", "Hitachi router.txt", "ipod.txt", "Linksys Router.txt", "MicroMP3.txt","Nokia 6600.txt", "norton.txt"]
+# train_base_path = "data/training/"
+# train_files = ["Canon PowerShot SD500.txt", "Canon S100.txt", "Diaper Champ.txt", "Hitachi router.txt", "ipod.txt", "Linksys Router.txt", "MicroMP3.txt","Nokia 6600.txt", "norton.txt"]
 
-training_data = {}
-for train_file in train_files:
-    train_path = os.path.join(train_base_path, train_file)
-    parse.read_txt_data(train_path, training_data)
-
-
-held_base_path = "data/heldout/"
-held_files = ["Apex AD2600 Progressive-scan DVD player.txt", "Canon G3.txt", "Creative Labs Nomad Jukebox Zen Xtra 40GB.txt", "Nikon coolpix 4300.txt", "Nokia 6610.txt"]
-
-held_data = {}
-for held_file in held_files:
-    held_path = os.path.join(held_base_path, held_file)
-    parse.read_txt_data(held_path, held_data)
+# training_data = {}
+# for train_file in train_files:
+#     train_path = os.path.join(train_base_path, train_file)
+#     parse.read_txt_data(train_path, training_data)
 
 
-training_data = parse.val_to_polarity(training_data)
-held_data = parse.val_to_polarity(held_data)
+# held_base_path = "data/heldout/"
+# held_files = ["Apex AD2600 Progressive-scan DVD player.txt", "Canon G3.txt", "Creative Labs Nomad Jukebox Zen Xtra 40GB.txt", "Nikon coolpix 4300.txt", "Nokia 6610.txt"]
+
+# held_data = {}
+# for held_file in held_files:
+#     held_path = os.path.join(held_base_path, held_file)
+#     parse.read_txt_data(held_path, held_data)
+
+
+# training_data = parse.val_to_polarity(training_data)
+# held_data = parse.val_to_polarity(held_data)
 
 
 #(i)
@@ -58,16 +58,17 @@ def get_function_features(sent):
 	func_feats['h_female_specific'] = 0
 	func_feats['h_male_specific'] = 0
 
-	female_words = ["she", "her","herself"]
-	male_words = ["he", "him","himself"]
-
+	female_words = set(["she", "her","herself"])
+	male_words = set(["he", "him","himself"])
+#use backoff tagger 
 
 	text = nltk.word_tokenize(sent)
 	pos = nltk.pos_tag(text)
 	for word in pos:
 		if word[0] in female_words:
-			func_feats['h_female_specific'] +=1
-			func_feats['h_gender_specific'] += 1
+			t = 0
+			#func_feats['h_female_specific'] +=1
+			#func_feats['h_gender_specific'] += 1
 		elif word[0] in male_words:
 			func_feats['h_male_specific'] +=1
 			func_feats['h_gender_specific'] += 1
@@ -124,22 +125,23 @@ def get_function_features(sent):
 	h_conjunction_exists was the highest
 	h_adverb_comparitive and h_adverb_comparitive_normalized
 	'''
-	best_func_feats = {}
+# 	best_func_feats = {}
 	
-	best_func_feats['h_adverb_exists'] = func_feats['h_adverb_exists']
-	best_func_feats['h_adjective_comparitive'] = func_feats['h_adjective_comparitive'] 
-	best_func_feats['h_adjective'] = func_feats['h_adjective'] 
-	best_func_feats['h_female_specific'] = func_feats['h_female_specific'] 
-	best_func_feats['h_determiner_exists'] = func_feats['h_determiner_exists']
-	best_func_feats['h_adverb_superlative'] = func_feats['h_adverb_superlative']
-	best_func_feats['h_male_specific'] = func_feats['h_male_specific'] 
+# 	best_func_feats['h_adverb_exists'] = func_feats['h_adverb_exists']
+# 	best_func_feats['h_adjective_comparitive'] = func_feats['h_adjective_comparitive'] 
+# 	best_func_feats['h_adjective'] = func_feats['h_adjective'] 
+# 	best_func_feats['h_female_specific'] = func_feats['h_female_specific'] 
+# 	best_func_feats['h_determiner_exists'] = func_feats['h_determiner_exists']
+# 	best_func_feats['h_adverb_superlative'] = func_feats['h_adverb_superlative']
+# 	best_func_feats['h_male_specific'] = func_feats['h_male_specific'] 
 	
-	best_func_feats['h_interjection'] = func_feats['h_interjection'] 
-	best_func_feats['h_gender_specific'] = func_feats['h_gender_specific'] 
-	best_func_feats['h_conjunction_exists'] = func_feats['h_conjunction_exists'] 
+# 	best_func_feats['h_interjection'] = func_feats['h_interjection'] 
+# 	best_func_feats['h_gender_specific'] = func_feats['h_gender_specific'] 
+# 	best_func_feats['h_conjunction_exists'] = func_feats['h_conjunction_exists'] 
 
-	best_func_feats['h_adverb_comparitive'] = func_feats['h_adverb_comparitive' ] 
-	return best_func_feats
+# 	best_func_feats['h_adverb_comparitive'] = func_feats['h_adverb_comparitive' ] 
+# 	#return best_func_feats
+# 	return func_feats
 
 
 
@@ -147,26 +149,26 @@ def get_function_features(sent):
 
 
  
-#testing
-feature_sets = [(get_function_features(n), v) for (n,v) in training_data.items()]
-random.shuffle(feature_sets)
-size = int(len(feature_sets) * 0.9)
-print "trainging results"
-train_set, test_set = feature_sets[size:], feature_sets[:size]
-#train_set = [line for line in train_set if line]
+# #testing
+# feature_sets = [(get_function_features(n), v) for (n,v) in training_data.items()]
+# random.shuffle(feature_sets)
+# size = int(len(feature_sets) * 0.9)
+# print "trainging results"
+# train_set, test_set = feature_sets[size:], feature_sets[:size]
+# #train_set = [line for line in train_set if line]
 
 
-classifier = nltk.NaiveBayesClassifier.train(train_set)
-print nltk.classify.accuracy(classifier, test_set)
-classifier.show_most_informative_features()
+# classifier = nltk.NaiveBayesClassifier.train(train_set)
+# print nltk.classify.accuracy(classifier, test_set)
+# classifier.show_most_informative_features()
 
-print " heldout results"
-train_set = feature_sets
-test_set = [(get_function_features(n), v) for (n,v) in held_data.items()]
-print nltk.classify.accuracy(classifier, test_set)
-classifier.show_most_informative_features()
+# print " heldout results"
+# train_set = feature_sets
+# test_set = [(get_function_features(n), v) for (n,v) in held_data.items()]
+# print nltk.classify.accuracy(classifier, test_set)
+# classifier.show_most_informative_features()
 
-#loop though each feature individually...
+# #loop though each feature individually...
 		
 # classifier=[]
 # feature_sets_keys =  feature_sets[0][0].keys()
