@@ -4,7 +4,7 @@ import nltk, string, math, csv, os, random, re, numpy
 wnl = nltk.WordNetLemmatizer()
 
 import h_features
-import n_feature
+#import n_feature
 import sFeature
 import tristan_features
 import parse
@@ -12,8 +12,8 @@ import parse
 def get_features(sent):
     #print sent
     #z.update(hn_feature.n_structural_features(sent))
-    z = n_feature.n_structural_features(sent)
-    #z = tristan_features.char_based_features(sent)
+    #z = n_feature.n_structural_features(sent)
+    z = tristan_features.char_based_features(sent)
     #z.update(tristan_features.char_based_features(sent))
     #z.update(tristan_features.syntactic_features(sent))
     #z.update(n_feature.n_structural_features(sent))
@@ -83,13 +83,13 @@ print "TRUE VALUE: %s" % perc
 
 
 print nltk.classify.accuracy(classifier, test_set)
-classifier.show_most_informative_features()
+#classifier.show_most_informative_features()
 
 print " heldout results"
 train_set = feature_sets
 test_set = [(get_features(n), v) for (n,v) in held_data.items()]
 print nltk.classify.accuracy(classifier, test_set)
-classifier.show_most_informative_features()
+#classifier.show_most_informative_features()
 
 final_test_files = ['product1.txt', 'product2.txt', 'product3.txt']
 final_test_path = "data/testdata/"
@@ -98,19 +98,19 @@ output = f = open(output_file_path, 'w+')
 
 test_file_dict = {} #dict of dicts
 for final_test_file in final_test_files:
-    file_dict = parse.read_test_data(os.path.join(final_test_path, final_test_file))
-    test_file_dict[final_test_file] = file_dict
+    #file_dict = parse.read_test_data(os.path.join(final_test_path, final_test_file))
+    key_list, val_list = parse.read_test_data(os.path.join(final_test_path, final_test_file))
+    test_file_dict[final_test_file] = (key_list, val_list)
 
 print len(test_file_dict) #dict of dict. {"product1.txt":{"sent":1...}, "product2":}
 
 for file_name in final_test_files:
-    text_dict = test_file_dict[file_name]
-    keys = [int(k) for k in text_dict.keys()]
-    keys.sort()
-    print keys
-    for key in keys:
-        line_num = key
-        sentence = text_dict[str(key)]
+    key_list = test_file_dict[file_name][0]
+    val_list = test_file_dict[file_name][1]
+    keys = [int(k) for  k in key_list]
+    for i in xrange(0, len(key_list)):
+        line_num = key_list[i]
+        sentence = val_list[i]
         if "[t]" not in sentence:
             output.write("%s\t%s\t%s\n" % (file_name, line_num, classifier.classify(get_features(sentence))))
         else:

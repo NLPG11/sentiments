@@ -85,11 +85,16 @@ def read_test_data(path):
     '''
     text_file = open(path, "r")
     temp_dict = {}
+    keys_list = []
+    val_list = []
     for line in text_file:
         sep = line.split("\t")
-        temp_dict[sep[0]] = sep[1].strip().replace("##", "")
-#    print len(temp_dict)
-    return temp_dict
+        #temp_dict[sep[0]] = sep[1].strip().replace("##", "")
+        keys_list.append(sep[0])
+        val_list.append(sep[1].strip().replace("##", ""))
+    return keys_list, val_list
+    #return temp_dict
+
 
 
 def rangefy(v):
