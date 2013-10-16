@@ -47,12 +47,12 @@ for row in reader6:
         strong.add(row[0].lower())
 
 def get_features(sent):
-    z= h_features.get_function_features(sent)
-	z.update(n_feature.n_structural_features(sent))
-	z.update(sFeature.sFeature(sent))
-	z.update(tristan_features.syntactic_features(sent))
-	z.update(tristan_features.char_based_features(sent))
-
+    #z = h_features.get_function_features(sent)
+    #z.update(n_feature.n_structural_features(sent))
+    #z.update(sFeature.sFeature(sent))
+    #z.update(tristan_features.syntactic_features(sent))
+    z = tristan_features.char_based_features(sent)
+    return z
 
 train_base_path = "data/training/"
 train_files = ["Canon PowerShot SD500.txt", "Canon S100.txt", "Diaper Champ.txt", "Hitachi router.txt", "ipod.txt", "Linksys Router.txt", "MicroMP3.txt","Nokia 6600.txt", "norton.txt"]
@@ -84,16 +84,16 @@ print "trainging results"
 train_set, test_set = feature_sets[size:], feature_sets[:size] ####confused as to why we need two test sets????????? 
 #train_set = [line for line in train_set if line]
 
-
-classifier = nltk.NaiveBayesClassifier.train(train_set)
+#classifier = nltk.NaiveBayesClassifier.train(train_set)
+classifier = nltk.DecisionTreeClassifier.train(train_set)
 print nltk.classify.accuracy(classifier, test_set)
-classifier.show_most_informative_features()
+#classifier.show_most_informative_features()
 
 print " heldout results"
 train_set = feature_sets
 test_set = [(get_features(n), v) for (n,v) in held_data.items()]
 print nltk.classify.accuracy(classifier, test_set)
-classifier.show_most_informative_features()
+#classifier.show_most_informative_features()
 
 
 final_test_files = ['product1.txt', 'product2.txt', 'product3.txt',
