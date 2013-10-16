@@ -36,6 +36,7 @@ def add_data(training, temp_feat):
         if not remove is None:
             target = target.replace(remove.group(1), "").strip() #remove the head
         training[target] = val
+    #print val
 
 def val_to_polarity(training_data):
     '''Given a training data, changes all vals (such as -2, -1, 0, 1, 4) 
