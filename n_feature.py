@@ -102,22 +102,23 @@ def n_structural_features(sentence):
     #word_score =ngoc_features.cheap_classifier(training_data)
     #keys = returned_word_score.keys()
     for word in original_words:
+        if len(word)>0:
         #if word in keys:
             #total_word_scores += word_score[word]
-        if word.isupper():
-            all_cap_words = True
-        elif word[0].islower():
-            begin_lower_case +=1
-        elif word[0].isupper():
-            begin_upper_case +=1
-        if word in positive_words:
-            num_pos_words +=1
-        elif word in negative_words:
-            num_neg_words +=1
-        if word in stopwords.words('english'): #if a stopword
-            words_nosw.remove(word)
-        else:
-            word_length+=len(word)
+            if word.isupper():
+                    all_cap_words = True
+            elif word[0].islower():
+                    begin_lower_case +=1
+            elif word[0].isupper():
+                    begin_upper_case +=1
+            if word in positive_words:
+                    num_pos_words +=1
+            elif word in negative_words:
+                    num_neg_words +=1
+            if word in stopwords.words('english'): #if a stopword
+                    words_nosw.remove(word)
+            else:
+                    word_length+=len(word)
             
     chars_per_word = word_length/len(words_nosw) #Average number of characters per word
     dict_feature['n_char_per_word'] = chars_per_word
