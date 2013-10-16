@@ -45,9 +45,8 @@ for row in reader6:
     if len(row) == 1:
         strong.add(row[0].lower())
 
-
 def get_features(sent):
-	z= h_features.get_function_features(sent)
+    z= h_features.get_function_features(sent)
 	z.update(n_feature.n_structural_features(sent))
 	z.update(sFeature.sFeature(sent))
 	z.update(tristan_features.syntactic_features(sent))
