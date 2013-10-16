@@ -4,18 +4,18 @@ import nltk, string, math, csv, os, random, re, numpy
 wnl = nltk.WordNetLemmatizer()
 
 import h_features
-import n_feature
+#import n_feature
 import sFeature
 import tristan_features
 import parse
 
 def get_features(sent):
     #print sent
-    #z = h_features.get_function_features(sent)
+    #z.update(h_features.get_function_features(sent))
     z = tristan_features.char_based_features(sent)
-    z.update(tristan_features.syntactic_features(sent))
-    z.update(n_feature.n_structural_features(sent))
-    z.update(sFeature.sFeature(sent))
+    #z.update(tristan_features.syntactic_features(sent))
+    #z.update(n_feature.n_structural_features(sent))
+    #z.update(sFeature.sFeature(sent))
     return z
 
 train_base_path = "data/training/"
@@ -47,8 +47,8 @@ print "trainging results"
 train_set, test_set = feature_sets[size:], feature_sets[:size]
 
 #print train_set
-#classifier = nltk.NaiveBayesClassifier.train(train_set)
-classifier = nltk.DecisionTreeClassifier.train(train_set)
+classifier = nltk.NaiveBayesClassifier.train(train_set)
+#classifier = nltk.DecisionTreeClassifier.train(train_set)
 #classifier = nltk.MaxentClassifier.train(train_set)
 #classifier = nltk.weka.WekaClassifier.train(train_set)
 
@@ -109,8 +109,11 @@ for file_name, text_dict in test_file_dict.items():
     for key in keys:
         line_num = key
         sentence = text_dict[str(key)]
-        #TODO CHECK FOR TITLE
-        output.write("%s\t%s\t%s\n" % (file_name, line_num, classifier.classify(get_features(sentence))))
+        if "[t]" not in sentence:
+            output.write("%s\t%s\t%s\n" % (file_name, line_num, classifier.classify(get_features(sentence))))
+        else:
+            output.write("%s\t%s\t%s\n" % (file_name, line_num, 0))
+
 output.close()
 
 
